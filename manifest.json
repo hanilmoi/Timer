@@ -2,18 +2,18 @@
   "name": "Hanil Tools",
   "short_name": "Hanil",
   "description": "A simple web app example",
-  "start_url": "/Tools/",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
   "icons": [
     {
-      "src": "Tools/icon-192.png",  // 상대 경로로 수정
+      "src": "Tools/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "Tools/icon-512.png",  // 상대 경로로 수정
+      "src": "Tools/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
