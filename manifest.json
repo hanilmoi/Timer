@@ -2,7 +2,7 @@
   "name": "Hanil Tools",
   "short_name": "Hanil",
   "description": "A simple web app example",
-  "start_url": "/",
+  "start_url": "/Tools/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
