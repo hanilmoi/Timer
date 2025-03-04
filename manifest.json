@@ -1,7 +1,7 @@
 {
   "name": "Hanil Tools",
-  "short_name": "Hanil",
-  "description": "A simple web app example",
+  "short_name": "Tools",
+  "description": "for Hanil High",
   "start_url": "/Tools/",
   "display": "standalone",
   "background_color": "#ffffff",
