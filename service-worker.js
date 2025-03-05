@@ -5,7 +5,8 @@ const CACHE_ASSETS = [
     '/Tools/index.html',
     '/Tools/manifest.json',
     '/Tools/icon-192.png',
-    '/Tools/icon-512.png'
+    '/Tools/icon-512.png',
+    '/Tools/service-worker.js'
 ];
 
 self.addEventListener('install', (event) => {
