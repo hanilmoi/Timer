@@ -1,11 +1,11 @@
 const CACHE_NAME = 'my-cache';
 
 const CACHE_ASSETS = [
-    '/',
-    '/index.html',
-    '/manifest.json',
-    'Tools/icon-192.png',
-    'Tools/icon-512.png'
+    '/Tools/',
+    '/Tools/index.html',
+    '/Tools/manifest.json',
+    '/Tools/icon-192.png',
+    '/Tools/icon-512.png'
 ];
 
 self.addEventListener('install', (event) => {
