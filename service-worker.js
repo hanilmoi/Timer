@@ -18,6 +18,12 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+    const requestUrl = event.request.url;
+    
+    if (requestUrl.startsWith('chrome-extension://')) {
+        return;
+    }
+
     event.respondWith(
         fetch(event.request)
             .then((response) => {
@@ -33,7 +39,6 @@ self.addEventListener('fetch', (event) => {
             })
     );
 });
-
 
 self.addEventListener('activate', (event) => {
     event.waitUntil(
