@@ -18,11 +18,21 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('fetch', (event) => {
     event.respondWith(
-        caches.match(event.request).then((response) => {
-            return response || new Response('No cache in resource', { status: 404 });
-        })
+        fetch(event.request)
+            .then((response) => {
+                return caches.open(CACHE_NAME).then((cache) => {
+                    cache.put(event.request, response.clone());
+                    return response;
+                });
+            })
+            .catch(() => {
+                return caches.match(event.request).then((response) => {
+                    return response || new Response('⚠️ 네트워크 오류 & 캐시 없음', { status: 404 });
+                });
+            })
     );
 });
+
 
 self.addEventListener('activate', (event) => {
     event.waitUntil(
