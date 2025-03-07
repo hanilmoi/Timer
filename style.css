@@ -25,7 +25,7 @@
 .middle-number {
     position: absolute;
     top: 744px; /* Figma에서의 Y 좌표 */
-    left: calc(50% - 40px); /* 가운데 정렬 (너비의 50%에서 40px 빼기) */
+    left: 420px;
     color: #000;
     font-family: "Anonymous Pro";
     font-size: 80px;
