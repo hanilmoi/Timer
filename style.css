@@ -1,35 +1,35 @@
 .sidebar {
-  position: relative;
-  width: 256px;
-  height: 960px;
-  flex-shrink: 0;
-  border-right: 1px solid #E0E0E0;
-  background: #FFF;
+    position: fixed; /* 화면에 고정 */
+    width: 256px;
+    height: 100%; /* 화면 전체 높이 */
+    border-right: 1px solid #E0E0E0;
+    background: #FFF;
+    top: 0;
+    left: 0;
 }
 
 .HANIL-TIMER {
-  position: absolute;
-  top: 24px; /* Figma에서의 Y 좌표 */
-  left: 24px; /* Figma에서의 X 좌표 */
-  width: 126px; /* Figma에서의 width */
-  height: 30px; /* Figma에서의 height */
-  color: #000;
-  font-family: Inter;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 150%; /* 30px */
-  letter-spacing: -0.2px;
+    position: absolute;
+    top: 24px; /* Figma에서의 Y 좌표 */
+    left: 24px; /* Figma에서의 X 좌표 */
+    width: 126px; /* Figma에서의 width */
+    height: 30px; /* Figma에서의 height */
+    color: #000;
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 30px; /* 30px */
+    letter-spacing: -0.2px;
 }
 
 .middle-number {
-  position: absolute;
-  top: 744px; /* Figma에서의 Y 좌표 */
-  left: 420px; /* Figma에서의 X 좌표 */
-  color: #000;
-  font-family: "Anonymous Pro";
-  font-size: 80px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 150%; /* 120px */
+    position: absolute;
+    top: 744px; /* Figma에서의 Y 좌표 */
+    left: calc(50% - 40px); /* 가운데 정렬 (너비의 50%에서 40px 빼기) */
+    color: #000;
+    font-family: "Anonymous Pro";
+    font-size: 80px;
+    font-weight: 400;
+    line-height: 120px;
+    text-align: center;
 }
