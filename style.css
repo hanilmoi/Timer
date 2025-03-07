@@ -1,3 +1,13 @@
+.HANIL-TIMER {
+  color: #000;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%; /* 30px */
+  letter-spacing: -0.2px;
+}
+
 .middle-number {
   color: #000;
   font-family: "Anonymous Pro";
