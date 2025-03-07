@@ -1,1 +1,8 @@
-
+.middle-number {
+  color: #000;
+  font-family: "Anonymous Pro";
+  font-size: 80px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 120px */
+}
