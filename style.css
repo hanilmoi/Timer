@@ -1,4 +1,17 @@
+.container {
+  position: relative;
+  width: 256px;  /* Figma에서 제공한 width */
+  height: 960px; /* Figma에서 제공한 height */
+  background-color: #FFF;
+  border-right: 1px solid #E0E0E0;
+}
+
 .HANIL-TIMER {
+  position: absolute;
+  top: 24px; /* Figma에서의 Y 좌표 */
+  left: 24px; /* Figma에서의 X 좌표 */
+  width: 126px; /* Figma에서의 width */
+  height: 30px; /* Figma에서의 height */
   color: #000;
   font-family: Inter;
   font-size: 20px;
@@ -9,10 +22,11 @@
 }
 
 .middle-number {
-  color: #000;
+  position: absolute;
+  top: 300px; /* Figma에서의 Y 좌표 */
+  left: 50px; /* Figma에서의 X 좌표 */
   font-family: "Anonymous Pro";
   font-size: 80px;
-  font-style: normal;
   font-weight: 400;
-  line-height: 150%; /* 120px */
+  line-height: 120px;
 }
