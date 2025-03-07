@@ -1,9 +1,10 @@
 .container {
   position: relative;
-  width: 256px;  /* Figma에서 제공한 width */
-  height: 960px; /* Figma에서 제공한 height */
-  background-color: #FFF;
+  width: 256px;
+  height: 960px;
+  flex-shrink: 0;
   border-right: 1px solid #E0E0E0;
+  background: #FFF;
 }
 
 .HANIL-TIMER {
