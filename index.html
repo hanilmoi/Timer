@@ -14,21 +14,13 @@
                     .catch((err) => console.error('❌ Service Worker 등록 실패:', err));
             });
         }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.outerWidth !== 1440 || window.outerHeight !== 960) {
+                window.resizeTo(1440, 960);
+            }
+        });
     </script>
-    <style>
-        html, body {
-            width: 1440px;
-            height: 960px;
-            margin: 0;
-            overflow: hidden;
-            resize: none;
-        }
-        
-        * {
-            user-select: none;
-            -webkit-user-select: none;
-        }
-    </style>
 </head>
 <body>
     <h1>환영합니다! Hanil Tools 앱에 오신 것을 환영합니다.</h1>
