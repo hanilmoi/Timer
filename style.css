@@ -11,16 +11,12 @@
 }
 
 .HANIL-TIMER {
-    position: absolute;
-    top: 24px; /* Figma에서의 Y 좌표 */
-    left: 24px; /* Figma에서의 X 좌표 */
-    width: 126px; /* Figma에서의 width */
-    height: 30px; /* Figma에서의 height */
     color: #000;
     font-family: Inter;
     font-size: 20px;
+    font-style: normal;
     font-weight: 600;
-    line-height: 30px; /* 30px */
+    line-height: 150%; /* 30px */
     letter-spacing: -0.2px;
 }
 
