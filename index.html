@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hanil Tools</title>
-    <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="style.css">
+
+    <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" href="style.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400&display=swap" rel="stylesheet">
-    
+
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -18,30 +19,15 @@
             });
         }
     </script>
-    <style>
-        html, body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            background: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-        .app {
-            width: 1080px;
-            height: 720px;
-            background: white;
-        }
-    </style>
 </head>
 <body>
     <div class="app">
         <div class="sidebar">
             <p class="HANIL-TIMER">HANIL TIMER</p>
         </div>
-        <p class="middle-number">80:00</p>
+        <div class="main-content">
+            <p class="middle-number">80:00</p>
+        </div>
     </div>
 </body>
 </html>
