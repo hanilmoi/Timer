@@ -21,13 +21,10 @@
 }
 
 .middle-number {
-    position: absolute;
-    top: 744px; /* Figma에서의 Y 좌표 */
-    left: 420px;
     color: #000;
     font-family: "Anonymous Pro";
-    font-size: 80px;
+    font-size: 48px;
+    font-style: normal;
     font-weight: 400;
-    line-height: 120px;
-    text-align: center;
+    line-height: 150%; /* 72px */
 }
