@@ -22,7 +22,7 @@ html, body {
     flex-direction: column;
     align-items: center;
     width: 120px;
-    padding: 24px 8px 462px 8px;
+    padding: 24px 8px 24px 8px;
     border-right: 1px solid #E0E0E0;
     background: #FFF;
     flex-shrink: 0;
