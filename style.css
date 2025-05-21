@@ -63,4 +63,7 @@ html, body {
     font-weight: 600;
     line-height: 110%; /* 37.4px */
     letter-spacing: -0.68px;
+    position: absolute;
+    bottom: 37px;
+    right: 124px;
 }
