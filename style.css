@@ -15,6 +15,7 @@ html, body {
     background: white;
     display: flex;
     flex-direction: row;
+    position: relative;
 }
 
 .sidebar {
