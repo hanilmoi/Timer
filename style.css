@@ -54,3 +54,13 @@ html, body {
     line-height: 150%;
     user-select: none;
 }
+
+.title {
+    color: #000;
+    font-family: Inter;
+    font-size: 34px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 110%; /* 37.4px */
+    letter-spacing: -0.68px;
+}
