@@ -56,13 +56,14 @@ html, body {
 }
 
 .title {
-    margin-top: 108px;
-    margin-left: 94px; /* 254px - 160px sidebar width */
+    color: #000;
     font-family: Inter;
     font-size: 34px;
+    font-style: normal;
     font-weight: 600;
-    line-height: 110%;
+    line-height: 110%; /* 37.4px */
     letter-spacing: -0.68px;
-    color: #000;
-    white-space: nowrap;
+    position: absoulute;
+    top: 108px;
+    left: 254px;
 }
