@@ -15,7 +15,6 @@ html, body {
     background: white;
     display: flex;
     flex-direction: row;
-    position: relative;
 }
 
 .sidebar {
@@ -57,17 +56,13 @@ html, body {
 }
 
 .title {
-    font-family: Inter;
-    font-size: 34px;
-    font-weight: 600;
-    line-height: 110%;
-    letter-spacing: -0.68px;
-    margin: 108px 0 0 254px; /* top: 108px, left: 254px 의 효과 */
-}
-
-/* .title-wrapper는 공간 유지를 위한 컨테이너 */
-.title-wrapper {
-    position: relative;
-    z-index: 1; /* 필요 시 우선순위 부여 */
-    height: 0;  /* 시각적으로 다른 요소에 영향 주지 않도록 */
+  margin-top: 108px;
+  margin-left: 94px; /* 254px - 160px sidebar width */
+  font-family: Inter;
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 110%;
+  letter-spacing: -0.68px;
+  color: #000;
+  white-space: nowrap;
 }
