@@ -40,11 +40,10 @@ html, body {
     white-space: nowrap;
 }
 
-.top {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+.topbar {
+    width: 906px;
+    height: 197px;
+    flex-shrink: 0;
 }
 
 .main-content {
