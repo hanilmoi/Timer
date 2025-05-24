@@ -40,6 +40,13 @@ html, body {
     white-space: nowrap;
 }
 
+.top {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
 .main-content {
     flex-grow: 1;
     display: flex;
