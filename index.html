@@ -3,13 +3,36 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hanil Tools</title>
+    <title>HANIL TIMER</title>
 
-    <link rel="manifest" href="manifest.json" />
-    <link rel="stylesheet" href="style.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400&display=swap" rel="stylesheet">
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Anonymous+Pro&family=Nanum+Myeongjo&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Custom Font 설정 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        Inter: ['Inter', 'sans-serif'],
+                        Anonymous_Pro: ['"Anonymous Pro"', 'monospace'],
+                        NanumMyeongjo: ['"Nanum Myeongjo"', 'serif']
+                    },
+                    colors: {
+                        hanilgreen: "#00AF84",
+                        graylight: "#F0F0F0",
+                        graymid: "#DFDFDF",
+                        graybg: "#F7F7F7",
+                        darkgray: "#444444"
+                    }
+                }
+            }
+        }
+    </script>
+  
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -20,42 +43,56 @@
         }
     </script>
 </head>
-<body>
-    <div class="app">
-        <div class="sidebar">
-            <p class="HANIL-TIMER">HANIL TIMER</p>
-        </div>
-        <div class="top">
-            <p class="title">모의고사</p>
-        </div>
-        <div class="main-content">
-            <svg xmlns="http://www.w3.org/2000/svg" width="250" height="250" viewBox="0 0 250 250" fill="none">
-                <circle cx="125" cy="125" r="125" fill="#00AF84"/>
-                <g filter="url(#filter0_i_14_33)">
-                    <circle cx="125" cy="125" r="109.375" fill="white"/>
-                </g>
-                <defs>
-                    <filter id="filter0_i_14_33" x="15.625" y="15.625" width="218.75" height="222.75" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-                        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                        <feOffset dy="4"/>
-                        <feGaussianBlur stdDeviation="5"/>
-                        <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-                        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-                        <feBlend mode="normal" in2="shape" result="effect1_innerShadow_14_33"/>
-                    </filter>
-                </defs>
-                <text
-                    x="125" y="135"
-                    text-anchor="middle"
-                    class="middle-number"
-                    fill="#000"
-                >
-                    80:00
-                </text>
-            </svg>
+
+<body class="bg-white font-Inter">
+    <!-- 사이드바 -->
+    <div class="w-[174px] h-screen bg-white border-r border-graymid fixed left-0 top-0 p-6">
+        <div class="text-black text-xl font-semibold leading-[30px] mb-10">HANIL TIMER</div>
+        <div class="space-y-2">
+            <div class="px-4 h-10 flex items-center gap-4 hover:bg-graybg rounded-lg">
+                <span class="text-black text-base font-semibold">Features</span>
+            </div>
+            <div class="px-4 h-10 flex items-center gap-4 bg-graybg rounded-lg">
+                <img src="https://placehold.co/25x25" class="w-[25px] h-[25px]" />
+                <span class="text-black text-base font-medium">모의고사</span>
+            </div>
+            <div class="px-4 h-10 flex items-center gap-4 hover:bg-graybg rounded-lg">
+                <img src="https://placehold.co/25x25" class="w-[25px] h-[25px]" />
+                <span class="text-black text-base font-medium">스톱워치</span>
+            </div>
+            <div class="px-4 h-10 flex items-center gap-4 hover:bg-graybg rounded-lg">
+                <img src="https://placehold.co/25x26" class="w-[25px] h-[26px]" />
+                <span class="text-black text-base font-medium">타이머</span>
+            </div>
         </div>
     </div>
+
+  <!-- 상단바 -->
+  <div class="ml-[174px] w-[906px] h-[197px] p-8">
+    <div class="flex justify-between items-center mb-8">
+      <div class="flex space-x-2 bg-graybg p-1 rounded-lg">
+        <div class="px-3 h-8 bg-white rounded shadow flex items-center text-black text-base font-medium">국어</div>
+        <div class="px-3 h-8 flex items-center text-black text-base font-medium">수학</div>
+        <div class="px-3 h-8 flex items-center text-black text-base font-medium">영어</div>
+        <div class="px-3 h-8 flex items-center text-black text-base font-medium">탐구</div>
+      </div>
+      <div class="h-10 px-4 bg-black text-white text-base font-medium rounded-lg flex items-center">for Hanil High</div>
+    </div>
+    <div>
+      <div class="text-black text-[34px] font-semibold leading-[37.40px]">모의고사</div>
+      <div class="text-darkgray text-base font-normal">Practice Exam Timer</div>
+    </div>
+  </div>
+
+  <!-- 메인 영역 -->
+  <div class="ml-[174px] w-[906px] flex justify-center items-center h-[400px] relative">
+    <div class="relative w-[250px] h-[250px]">
+      <div class="absolute inset-0 bg-hanilgreen rounded-full"></div>
+      <div class="absolute left-[15.6px] top-[15.6px] w-[218.75px] h-[218.75px] bg-white rounded-full shadow-[inset_0_4px_10px_rgba(0,0,0,0.25)]"></div>
+      <div class="absolute left-[67px] top-[89px] text-black text-5xl font-normal font-Anonymous_Pro leading-[72px]">80:00</div>
+    </div>
+    <div class="absolute bottom-0 right-10 text-black text-xl font-NanumMyeongjo">한일고등학교 학생자치정부 정보부</div>
+  </div>
+
 </body>
 </html>
