@@ -214,6 +214,11 @@
             timeLeft = totalTime;
             updateDisplay();
             subjectStates[currentSubject].timeLeft = timeLeft;
+
+            if (alarmSound) {
+                alarmSound.pause();
+                alarmSound.currentTime = 0;
+            }
         }
     
         function startTimer(resume = false) {
