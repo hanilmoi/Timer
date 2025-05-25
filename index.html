@@ -269,10 +269,10 @@
         document.querySelectorAll(".subject-btn").forEach(btn => {
             btn.addEventListener("click", () => {
                 document.querySelectorAll(".subject-btn").forEach(otherBtn => {
-                    otherBtn.classList.remove("bg-white", "shadow");
+                    otherBtn.classList.remove("bg-white", "shadow", "rounded-lg");
                     otherBtn.classList.add("bg-transparent");
                 });
-                btn.classList.add("bg-white", "shadow");
+                btn.classList.add("bg-white", "shadow", "rounded-lg");
                 btn.classList.remove("bg-transparent");
     
                 switchSubject(btn.dataset.subject);
