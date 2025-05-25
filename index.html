@@ -135,12 +135,13 @@
         const timerDisplay = document.querySelector(".timer-text");
     
         let timerInterval;
-        let timeLeft = 80 * 60; // 80분
+        let startTime = 10
+        let timeLeft = startTime; // 80분
     
         function updateProgress() {
-            const percent = (1 - timeLeft / (80 * 60)) * 100;
+            const percent = (1 - timeLeft / (startTime)) * 100;
             document.getElementById('fillCircle').style.background = 
-                `conic-gradient(#00af84 ${percent}%, #f0f0f0 ${percent}%)`;
+                `conic-gradient(#f0f0f0 ${percent}%, #00af84 ${percent}%)`;
         }
         
         function updateDisplay() {
