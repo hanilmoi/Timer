@@ -214,11 +214,6 @@
             timeLeft = totalTime;
             updateDisplay();
             subjectStates[currentSubject].timeLeft = timeLeft;
-
-            if (alarmSound) {
-                alarmSound.pause();
-                alarmSound.currentTime = 0;
-            }
         }
     
         function startTimer(resume = false) {
@@ -239,6 +234,7 @@
                     if (alarmSound) alarmSound.play();
                     alert("⏰ 시간이 끝났습니다!");
                     alarmSound.pause();
+                    alarmSound.currentTime = 0;
                     return;
                 }
     
