@@ -73,7 +73,7 @@
     <div class="ml-[180px] w-[906px] h-[197px] p-8">
         <div class="flex justify-between items-center mb-8">
             <div class="flex space-x-2 bg-graybg p-1 rounded-lg" id="subjectButtons">
-                <div class="subject-btn px-3 h-8 bg-white rounded shadow flex items-center text-black text-base font-medium cursor-pointer"
+                <div class="subject-btn px-3 h-8 bg-white rounded-lg shadow flex items-center text-black text-base font-medium cursor-pointer"
                      data-subject="국어" data-time="4800" data-color="#00AF84">국어</div>
                 <div class="subject-btn px-3 h-8 flex items-center text-black text-base font-medium cursor-pointer"
                      data-subject="수학" data-time="6000" data-color="#E5007F">수학</div>
@@ -199,11 +199,11 @@
             btn.addEventListener("click", () => {
                 // 1. 전체 버튼에서 배경 제거
                 document.querySelectorAll(".subject-btn").forEach(b => {
-                    b.classList.remove("bg-white", "shadow");
+                    b.classList.remove("bg-white", "shadow", "rounded-lg");
                 });
     
                 // 2. 현재 버튼 강조
-                btn.classList.add("bg-white", "shadow");
+                btn.classList.add("bg-white", "shadow", "rounded-lg");
     
                 // 3. 시간 및 색상 변경
                 totalTime = parseInt(btn.getAttribute("data-time"));
