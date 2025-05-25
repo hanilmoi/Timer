@@ -211,6 +211,8 @@
                     updateDisplay();
                     alarmSound.play();
                     alert("⏰ 시간이 끝났습니다!");
+                    alarmSound.pause();        // 여기서 재생 멈춤
+                    alarmSound.currentTime = 0; // 처음부터 다시 재생 준비
                     stopButton.classList.add("hidden");
                     playButton.classList.remove("hidden");
                     return;
