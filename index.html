@@ -49,30 +49,36 @@
 
 <body class="bg-white font-Inter">
     <!-- 사이드바 -->
-    <div class="w-[180px] h-screen bg-white border-r border-graymid fixed left-0 top-0 p-6">
-        <div class="text-black text-xl font-semibold leading-[30px] mb-10">HANIL TIMER</div>
-        <div class="space-y-2">
-            <div class="h-10 flex items-center gap-4">
-                <span class="text-black text-base font-semibold">Features</span>
+    <div class="w-[180px] h-screen bg-white border-r border-graymid fixed left-0 top-0 p-6 flex flex-col justify-between">
+        <div>
+            <div class="text-black text-xl font-semibold leading-[30px] mb-10">HANIL TIMER</div>
+            <div class="space-y-2">
+                <div class="h-10 flex items-center gap-4">
+                    <span class="text-black text-base font-semibold">Features</span>
+                </div>
+            
+                <!-- 모의고사 (현재 페이지) -->
+                <div class="px-2 h-10 flex items-center gap-4 bg-graybg rounded-lg">
+                    <img src="/Timer/PracticeExamTimer.png" class="w-[25px] h-[25px]" />
+                    <span class="text-black text-base font-medium">모의고사</span>
+                </div>
+            
+                <!-- 스톱워치 (링크 추가) -->
+                <a href="stopwatch.html" class="block px-2 h-10 flex items-center gap-4 hover:bg-graybg rounded-lg">
+                    <img src="/Timer/Stopwatch.png" class="w-[25px] h-[25px]" />
+                    <span class="text-black text-base font-medium">스톱워치</span>
+                </a>
+            
+                <!-- 타이머 (링크 추가) -->
+                <a href="timer.html" class="block px-2 h-10 flex items-center gap-4 hover:bg-graybg rounded-lg">
+                    <img src="/Timer/Timer.png" class="w-[25px] h-[26px]" />
+                    <span class="text-black text-base font-medium">타이머</span>
+                </a>
             </div>
-        
-            <!-- 모의고사 (현재 페이지) -->
-            <div class="px-2 h-10 flex items-center gap-4 bg-graybg rounded-lg">
-                <img src="/Timer/PracticeExamTimer.png" class="w-[25px] h-[25px]" />
-                <span class="text-black text-base font-medium">모의고사</span>
-            </div>
-        
-            <!-- 스톱워치 (링크 추가) -->
-            <a href="stopwatch.html" class="block px-2 h-10 flex items-center gap-4 hover:bg-graybg rounded-lg">
-                <img src="/Timer/Stopwatch.png" class="w-[25px] h-[25px]" />
-                <span class="text-black text-base font-medium">스톱워치</span>
-            </a>
-        
-            <!-- 타이머 (링크 추가) -->
-            <a href="timer.html" class="block px-2 h-10 flex items-center gap-4 hover:bg-graybg rounded-lg">
-                <img src="/Timer/Timer.png" class="w-[25px] h-[26px]" />
-                <span class="text-black text-base font-medium">타이머</span>
-            </a>
+        </div>
+        <div class="mt-4">
+            <label class="text-black text-sm font-medium block mb-1" for="alarmFileInput">🔔 알람 소리 선택</label>
+            <input type="file" id="alarmFileInput" accept="audio/*" class="text-sm w-full" />
         </div>
     </div>
     
@@ -90,12 +96,6 @@
                      data-subject="탐구" data-time="1800" data-color="#004A95">탐구</div>
             </div>
             <div class="h-10 px-4 bg-black text-white text-base font-medium rounded-lg flex items-center">for Hanil High</div>
-        </div>
-        <div class="flex justify-end mb-4 pr-0">
-            <div>
-                <label class="text-black text-sm font-medium block mb-1" for="alarmFileInput">🔔 알람 소리 선택</label>
-                <input type="file" id="alarmFileInput" accept="audio/*" class="text-sm" />
-            </div>
         </div>
         <div>
             <div class="text-black text-[34px] font-semibold leading-[37.40px]">모의고사</div>
