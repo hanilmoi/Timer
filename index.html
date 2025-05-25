@@ -151,17 +151,14 @@
     </style>
 
     <script>
-        // DOM 요소 가져오기
         const timerDisplay = document.querySelector(".timer-text");
         const playButton = document.getElementById("playButton");
         const stopButton = document.getElementById("stopButton");
         const resetButton = document.getElementById("resetButton");
         const fillCircle = document.getElementById("fillCircle");
         const alarmInput = document.getElementById("alarmFileInput");
-
+    
         let alarmSound = null;
-
-        // 알람 소리 파일 선택 핸들러
         alarmInput.addEventListener("change", event => {
             const file = event.target.files[0];
             if (file) {
@@ -170,122 +167,111 @@
                 alert("✅ 알람 소리 파일이 설정되었습니다!");
             }
         });
-
-        // 타이머 상태 변수
-        let totalTime = 5; // 기본값: 국어 80분 (초단위)
+    
+        const subjectStates = {
+            "국어": { timeLeft: 4800, running: false },
+            "수학": { timeLeft: 6000, running: false },
+            "영어": { timeLeft: 4200, running: false },
+            "탐구": { timeLeft: 1800, running: false }
+        };
+    
+        let currentSubject = "국어";
+        let totalTime = 4800;
         let timeLeft = totalTime;
         let timerInterval = null;
-        let currentColor = "#00AF84"; // 기본 색상 (국어)
-
-        /**
-         * 진행도 원 업데이트
-         * 전체 시간 대비 경과 퍼센트로 그라디언트 조절
-         */
+        let currentColor = "#00AF84";
+    
         function updateProgress() {
             const percent = (1 - timeLeft / totalTime) * 100;
             fillCircle.style.background = `conic-gradient(#f0f0f0 ${percent}%, ${currentColor} ${percent}%)`;
         }
-
-        /**
-         * 타이머 시간 표시 업데이트
-         * 6000초일 경우 특별한 분:초 포맷 처리 포함
-         */
+    
         function updateDisplay() {
             const time = Math.max(0, Math.floor(timeLeft));
-            if (totalTime === 6000) {
-                // 100분인 경우 분:초를 예외적으로 처리 (ex: 100:00)
-                const minutes = Math.floor(time / 60);
-                const seconds = Math.floor(time % 60);
-                timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-            } else {
-                // 기본 포맷 MM:SS
-                const minutes = String(Math.floor(time / 60)).padStart(2, '0');
-                const seconds = String(time % 60).padStart(2, '0');
-                timerDisplay.textContent = `${minutes}:${seconds}`;
-            }
+            const minutes = totalTime === 6000 ? Math.floor(time / 60) : String(Math.floor(time / 60)).padStart(2, '0');
+            const seconds = String(time % 60).padStart(2, '0');
+            timerDisplay.textContent = `${minutes}:${seconds}`;
             updateProgress();
         }
-
-        /**
-         * 타이머 정지 함수
-         */
+    
         function stopTimer() {
             clearInterval(timerInterval);
             timerInterval = null;
+            subjectStates[currentSubject].running = false;
+            subjectStates[currentSubject].timeLeft = timeLeft;
             stopButton.classList.add("hidden");
             playButton.classList.remove("hidden");
         }
-
-        /**
-         * 타이머 초기화 함수
-         */
+    
         function resetTimer() {
             stopTimer();
             timeLeft = totalTime;
             updateDisplay();
+            subjectStates[currentSubject].timeLeft = timeLeft;
         }
-
-        /**
-         * 타이머 시작 함수
-         * 시간 경과에 따라 업데이트 및 알람 재생
-         */
-        function startTimer() {
+    
+        function startTimer(resume = false) {
             playButton.classList.add("hidden");
             stopButton.classList.remove("hidden");
-
+            subjectStates[currentSubject].running = true;
+    
             const startTime = performance.now() - (totalTime - timeLeft) * 1000;
-
             timerInterval = setInterval(() => {
                 const now = performance.now();
                 const elapsed = (now - startTime) / 1000;
                 timeLeft = totalTime - elapsed;
-
+    
                 if (timeLeft <= 0) {
                     stopTimer();
                     timeLeft = 0;
                     updateDisplay();
-                    if (alarmSound) {
-                        alarmSound.play();
-                        alert("⏰ 시간이 끝났습니다!");
-                        alarmSound.pause();
-                        alarmSound.currentTime = 0;
-                    } else {
-                        alert("⏰ 시간이 끝났습니다!");
-                    }
+                    if (alarmSound) alarmSound.play();
+                    alert("⏰ 시간이 끝났습니다!");
                     return;
                 }
-
+    
                 updateDisplay();
             }, 50);
         }
-
-        // 버튼 이벤트 등록
-        playButton.addEventListener("click", startTimer);
+    
+        function switchSubject(subject) {
+            if (currentSubject === subject) return;
+    
+            if (timerInterval !== null) stopTimer();
+    
+            subjectStates[currentSubject].timeLeft = timeLeft;
+            subjectStates[currentSubject].running = (timerInterval !== null);
+    
+            currentSubject = subject;
+            totalTime = parseInt(document.querySelector(`[data-subject="${subject}"]`).dataset.time);
+            timeLeft = subjectStates[subject].timeLeft;
+            currentColor = document.querySelector(`[data-subject="${subject}"]`).dataset.color;
+    
+            updateDisplay();
+    
+            if (subjectStates[subject].running) {
+                startTimer(true);
+            }
+        }
+    
+        playButton.addEventListener("click", () => startTimer());
         stopButton.addEventListener("click", stopTimer);
         resetButton.addEventListener("click", resetTimer);
-
-        // 과목 버튼 클릭 시 시간 및 색상 변경 처리
+    
         document.querySelectorAll(".subject-btn").forEach(btn => {
             btn.addEventListener("click", () => {
-                // 선택된 버튼에 스타일 적용, 나머지는 초기화
                 document.querySelectorAll(".subject-btn").forEach(otherBtn => {
                     otherBtn.classList.remove("bg-white", "shadow");
                     otherBtn.classList.add("bg-transparent");
                 });
                 btn.classList.add("bg-white", "shadow");
                 btn.classList.remove("bg-transparent");
-
-                // 타이머 시간 및 색상 변경
-                totalTime = parseInt(btn.dataset.time, 10);
-                timeLeft = totalTime;
-                currentColor = btn.dataset.color;
-
-                resetTimer();
+    
+                switchSubject(btn.dataset.subject);
             });
         });
-
-        // 초기화 및 기본 셋팅
-        resetTimer();
+    
+        updateDisplay();
     </script>
 </body>
 </html>
