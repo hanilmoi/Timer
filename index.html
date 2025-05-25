@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Hanil Timer</title>
     
     <link rel="icon" href="/Timer/favicon.ico" type="image/x-icon" />
@@ -14,7 +14,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Anonymous+Pro&family=Nanum+Myeongjo&display=swap" rel="stylesheet">
 
-    <!-- Tailwind Custom Font 설정 -->
+    <!-- Tailwind Custom Font & Color 설정 -->
     <script>
         tailwind.config = {
             theme: {
@@ -36,56 +36,53 @@
         }
     </script>
   
+    <!-- 서비스워커 등록 -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/Timer/service-worker.js')
                     .then(() => console.log('✅ Service Worker 등록 성공'))
-                    .catch((err) => console.error('❌ Service Worker 등록 실패:', err));
+                    .catch(err => console.error('❌ Service Worker 등록 실패:', err));
             });
         }
     </script>
 </head>
 
 <body class="bg-white font-Inter">
+
     <!-- 사이드바 -->
-    <div class="w-[180px] h-screen bg-white border-r border-graymid fixed left-0 top-0 p-6 flex flex-col justify-between">
+    <aside class="fixed left-0 top-0 w-[180px] h-screen bg-white border-r border-graymid p-6 flex flex-col justify-between">
         <div>
-            <div class="text-black text-xl font-semibold leading-[30px] mb-10">HANIL TIMER</div>
-            <div class="space-y-2">
+            <h1 class="text-black text-xl font-semibold mb-10 leading-[30px]">HANIL TIMER</h1>
+            <nav class="space-y-2">
                 <div class="h-10 flex items-center gap-4">
                     <span class="text-black text-base font-semibold">Features</span>
                 </div>
-            
-                <!-- 모의고사 (현재 페이지) -->
                 <div class="px-2 h-10 flex items-center gap-4 bg-graybg rounded-lg">
-                    <img src="/Timer/PracticeExamTimer.png" class="w-[25px] h-[25px]" />
+                    <img src="/Timer/images/PracticeExamTimer.png" alt="모의고사 아이콘" class="w-[25px] h-[25px]" />
                     <span class="text-black text-base font-medium">모의고사</span>
                 </div>
-            
-                <!-- 스톱워치 (링크 추가) -->
                 <a href="stopwatch.html" class="block px-2 h-10 flex items-center gap-4 hover:bg-graybg rounded-lg">
-                    <img src="/Timer/Stopwatch.png" class="w-[25px] h-[25px]" />
+                    <img src="/Timer/images/Stopwatch.png" alt="스톱워치 아이콘" class="w-[25px] h-[25px]" />
                     <span class="text-black text-base font-medium">스톱워치</span>
                 </a>
-            
-                <!-- 타이머 (링크 추가) -->
                 <a href="timer.html" class="block px-2 h-10 flex items-center gap-4 hover:bg-graybg rounded-lg">
-                    <img src="/Timer/Timer.png" class="w-[25px] h-[26px]" />
+                    <img src="/Timer/images/Timer.png" alt="타이머 아이콘" class="w-[25px] h-[26px]" />
                     <span class="text-black text-base font-medium">타이머</span>
                 </a>
-            </div>
+            </nav>
         </div>
         <div class="mt-4">
-            <label class="text-black text-sm font-medium block mb-1" for="alarmFileInput">🔔 알람 소리 선택</label>
+            <label for="alarmFileInput" class="text-black text-sm font-medium block mb-1">🔔 알람 소리 선택</label>
             <input type="file" id="alarmFileInput" accept="audio/*" class="text-sm w-full" />
         </div>
-    </div>
+    </aside>
     
     <!-- 상단바 -->
-    <div class="ml-[180px] w-[906px] h-[197px] p-8">
+    <header class="ml-[180px] w-[906px] h-[197px] p-8">
         <div class="flex justify-between items-center mb-8">
             <div class="flex space-x-2 bg-graybg p-1 rounded-lg" id="subjectButtons">
+                <!-- 과목 버튼 : data-subject, data-time(초), data-color(진행바 색상) -->
                 <div class="subject-btn px-3 h-8 bg-white rounded-lg shadow flex items-center text-black text-base font-medium cursor-pointer"
                      data-subject="국어" data-time="4800" data-color="#00AF84">국어</div>
                 <div class="subject-btn px-3 h-8 flex items-center text-black text-base font-medium cursor-pointer"
@@ -98,59 +95,74 @@
             <div class="h-10 px-4 bg-black text-white text-base font-medium rounded-lg flex items-center">for Hanil High</div>
         </div>
         <div>
-            <div class="text-black text-[34px] font-semibold leading-[37.40px]">모의고사</div>
-            <div class="text-darkgray text-base font-normal">Practice Exam Timer</div>
+            <h2 class="text-black text-[34px] font-semibold leading-[37.40px]">모의고사</h2>
+            <p class="text-darkgray text-base font-normal">Practice Exam Timer</p>
         </div>
-    </div>
+    </header>
 
-    <!-- 메인 영역 -->
-    <div class="ml-[174px] w-[906px] flex justify-center items-center h-[400px] relative">
-        <div data-layer="Clock" class="Clock w-[566px] h-[250px] relative overflow-hidden">
-            <div data-layer="과목별 타이머" class="w-[250px] h-[250px] left-[158px] top-0 absolute">
+    <!-- 메인 타이머 영역 -->
+    <main class="ml-[174px] w-[906px] flex justify-center items-center h-[400px] relative">
+        <section data-layer="Clock" class="Clock w-[566px] h-[250px] relative overflow-hidden">
+            <div data-layer="과목별 타이머" class="w-[250px] h-[250px] absolute left-[158px] top-0">
                 <!-- 프로그레스 배경 -->
                 <div id="progressCircle" class="w-full h-full rounded-full relative">
-                    <!-- 회전 채우기 원 -->
-                    <div id="fillCircle" class="absolute inset-0 rounded-full bg-[conic-gradient(#f0f0f0_0%,#00af84_0%)]"></div>
-                    <!-- 안쪽 흰색 원 (시계 중앙 효과) -->
+                    <!-- 진행 채우기 원 -->
+                    <div id="fillCircle" class="absolute inset-0 rounded-full bg-[conic-gradient(#f0f0f0_0%,#00af84_0%)] transition-background duration-1000 ease-linear"></div>
+                    <!-- 중앙 흰색 원 (입체감 효과) -->
                     <div class="absolute inset-[15.62px] rounded-full bg-white shadow-[inset_0px_4px_10px_0px_rgba(0,0,0,0.25)]"></div>
                 </div>
             </div>
+
             <!-- Reset 버튼 -->
-            <div id="resetButton" class="w-[100px] h-[100px] left-[466px] top-[65px] absolute cursor-pointer">
-                <div class="w-[100px] h-[100px] bg-[#f0f0f0] rounded-full shadow-[inset_0px_1px_10px_0px_rgba(0,0,0,0.25)]"></div>
-                <img src="/Timer/Reset.png" class="w-[41.67px] h-[41.67px] left-[29px] top-[29px] absolute" />
-            </div>
+            <button id="resetButton" aria-label="타이머 초기화" class="w-[100px] h-[100px] absolute left-[466px] top-[65px] cursor-pointer">
+                <div class="w-full h-full bg-[#f0f0f0] rounded-full shadow-[inset_0px_1px_10px_0px_rgba(0,0,0,0.25)]"></div>
+                <img src="/Timer/images/Reset.png" alt="리셋 아이콘" class="w-[41.67px] h-[41.67px] absolute left-[29px] top-[29px]" />
+            </button>
+
             <!-- Play 버튼 -->
-            <div id="playButton" class="PlayStop w-[100px] h-[100px] left-0 top-[65px] absolute cursor-pointer">
-                <div class="Ellipse3 w-[100px] h-[100px] bg-[#f0f0f0] rounded-full shadow-[inset_0px_1px_10px_0px_rgba(0,0,0,0.25)]"></div>
-                <img src="/Timer/Play.png" class="w-[41.67px] h-[41.67px] left-[33px] top-[29px] absolute" style="pointer-events: none;" />
-            </div>
+            <button id="playButton" aria-label="타이머 시작" class="w-[100px] h-[100px] absolute left-0 top-[65px] cursor-pointer">
+                <div class="w-full h-full bg-[#f0f0f0] rounded-full shadow-[inset_0px_1px_10px_0px_rgba(0,0,0,0.25)]"></div>
+                <img src="/Timer/images/Play.png" alt="플레이 아이콘" class="w-[41.67px] h-[41.67px] absolute left-[33px] top-[29px]" />
+            </button>
+
             <!-- Stop 버튼 -->
-            <div id="stopButton" class="PlayStop w-[100px] h-[100px] left-0 top-[65px] absolute hidden cursor-pointer">
-                <div class="Ellipse3 w-[100px] h-[100px] bg-[#f0f0f0] rounded-full shadow-[inset_0px_1px_10px_0px_rgba(0,0,0,0.25)]"></div>
-                <img src="/Timer/Stop.png" class="w-[33.33px] h-[33.33px] left-[33px] top-[33px] absolute" style="pointer-events: none;" />
+            <button id="stopButton" aria-label="타이머 정지" class="w-[100px] h-[100px] absolute left-0 top-[65px] cursor-pointer hidden">
+                <div class="w-full h-full bg-[#f0f0f0] rounded-full shadow-[inset_0px_1px_10px_0px_rgba(0,0,0,0.25)]"></div>
+                <img src="/Timer/images/Stop.png" alt="스톱 아이콘" class="w-[33.33px] h-[33.33px] absolute left-[33px] top-[33px]" />
+            </button>
+
+            <!-- 시간 표시 -->
+            <div class="timer-text absolute left-[217px] top-[89px] flex justify-center text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">
+                00:00
             </div>
-            <div data-layer="80:00" class="timer-text left-[217px] top-[89px] absolute justify-center text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">00:00</div>
+        </section>
+
+        <div class="absolute bottom-0 right-10 text-black text-xl font-NanumMyeongjo">
+            한일고등학교 학생자치정부 정보부
         </div>
-        <div class="absolute bottom-0 right-10 text-black text-xl font-NanumMyeongjo">한일고등학교 학생자치정부 정보부</div>
-    </div>
+    </main>
 
     <style>
-      #fillCircle {
-        background: conic-gradient(#f0f0f0 0%, #00af84 0%);
-        transition: background 1s linear;
-      }
+        /* 진행 채우기 원 배경 전환 효과 */
+        #fillCircle {
+            background: conic-gradient(#f0f0f0 0%, #00af84 0%);
+            transition: background 1s linear;
+        }
     </style>
 
     <script>
+        // DOM 요소 가져오기
         const timerDisplay = document.querySelector(".timer-text");
         const playButton = document.getElementById("playButton");
         const stopButton = document.getElementById("stopButton");
         const resetButton = document.getElementById("resetButton");
         const fillCircle = document.getElementById("fillCircle");
+        const alarmInput = document.getElementById("alarmFileInput");
+
         let alarmAudio = null;
-        
-        document.getElementById("alarmFileInput").addEventListener("change", (event) => {
+
+        // 알람 소리 파일 선택 핸들러
+        alarmInput.addEventListener("change", event => {
             const file = event.target.files[0];
             if (file) {
                 alarmAudio = new Audio(URL.createObjectURL(file));
@@ -159,100 +171,121 @@
             }
         });
 
-        let totalTime = 10; // 기본: 국어 (80분)
+        // 타이머 상태 변수
+        let totalTime = 4800; // 기본값: 국어 80분 (초단위)
         let timeLeft = totalTime;
-        let timerInterval;
-    
+        let timerInterval = null;
+        let currentColor = "#00AF84"; // 기본 색상 (국어)
+
+        /**
+         * 진행도 원 업데이트
+         * 전체 시간 대비 경과 퍼센트로 그라디언트 조절
+         */
         function updateProgress() {
             const percent = (1 - timeLeft / totalTime) * 100;
             fillCircle.style.background = `conic-gradient(#f0f0f0 ${percent}%, ${currentColor} ${percent}%)`;
         }
-    
+
+        /**
+         * 타이머 시간 표시 업데이트
+         * 6000초일 경우 특별한 분:초 포맷 처리 포함
+         */
         function updateDisplay() {
             const time = Math.max(0, Math.floor(timeLeft));
-        
-            // 특별 조건: 총 시간이 6000초(100분)일 때만 예외적으로 표시
             if (totalTime === 6000) {
-                const minutes = Math.floor(time / 60); // 100, 99, ...
-                const seconds = Math.floor(time % 60); // 0 ~ 59
-                timerDisplay.textContent = `${minutes}:${seconds}`;
+                // 100분인 경우 분:초를 예외적으로 처리 (ex: 100:00)
+                const minutes = Math.floor(time / 60);
+                const seconds = Math.floor(time % 60);
+                timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
             } else {
+                // 기본 포맷 MM:SS
                 const minutes = String(Math.floor(time / 60)).padStart(2, '0');
                 const seconds = String(time % 60).padStart(2, '0');
                 timerDisplay.textContent = `${minutes}:${seconds}`;
             }
-        
             updateProgress();
         }
 
+        /**
+         * 타이머 정지 함수
+         */
         function stopTimer() {
             clearInterval(timerInterval);
+            timerInterval = null;
             stopButton.classList.add("hidden");
             playButton.classList.remove("hidden");
         }
-    
+
+        /**
+         * 타이머 초기화 함수
+         */
         function resetTimer() {
             stopTimer();
             timeLeft = totalTime;
             updateDisplay();
         }
-    
-        let currentColor = "#00AF84"; // 초기 국어 색상
-    
-        playButton.addEventListener("click", () => {
+
+        /**
+         * 타이머 시작 함수
+         * 시간 경과에 따라 업데이트 및 알람 재생
+         */
+        function startTimer() {
             playButton.classList.add("hidden");
             stopButton.classList.remove("hidden");
-    
+
             const startTime = performance.now() - (totalTime - timeLeft) * 1000;
-    
+
             timerInterval = setInterval(() => {
                 const now = performance.now();
                 const elapsed = (now - startTime) / 1000;
                 timeLeft = totalTime - elapsed;
-    
+
                 if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
+                    stopTimer();
                     timeLeft = 0;
                     updateDisplay();
-                    alarmAudio.play();
-                    alert("⏰ 시간이 끝났습니다!");
-                    alarmAudio.pause();        // 여기서 재생 멈춤
-                    alarmAudio.currentTime = 0; // 처음부터 다시 재생 준비
-                    stopButton.classList.add("hidden");
-                    playButton.classList.remove("hidden");
+                    if (alarmAudio) {
+                        alarmAudio.play();
+                        alert("⏰ 시간이 끝났습니다!");
+                        alarmAudio.pause();
+                        alarmAudio.currentTime = 0;
+                    } else {
+                        alert("⏰ 시간이 끝났습니다!");
+                    }
                     return;
                 }
-    
+
                 updateDisplay();
             }, 50);
-        });
-    
+        }
+
+        // 버튼 이벤트 등록
+        playButton.addEventListener("click", startTimer);
         stopButton.addEventListener("click", stopTimer);
         resetButton.addEventListener("click", resetTimer);
-    
-        // 🟢 과목 버튼 클릭 이벤트
+
+        // 과목 버튼 클릭 시 시간 및 색상 변경 처리
         document.querySelectorAll(".subject-btn").forEach(btn => {
             btn.addEventListener("click", () => {
-                // 1. 전체 버튼에서 배경 제거
-                document.querySelectorAll(".subject-btn").forEach(b => {
-                    b.classList.remove("bg-white", "shadow", "rounded-lg");
+                // 선택된 버튼에 스타일 적용, 나머지는 초기화
+                document.querySelectorAll(".subject-btn").forEach(otherBtn => {
+                    otherBtn.classList.remove("bg-white", "shadow");
+                    otherBtn.classList.add("bg-transparent");
                 });
-    
-                // 2. 현재 버튼 강조
-                btn.classList.add("bg-white", "shadow", "rounded-lg");
-    
-                // 3. 시간 및 색상 변경
-                totalTime = parseInt(btn.getAttribute("data-time"));
+                btn.classList.add("bg-white", "shadow");
+                btn.classList.remove("bg-transparent");
+
+                // 타이머 시간 및 색상 변경
+                totalTime = parseInt(btn.dataset.time, 10);
                 timeLeft = totalTime;
-                currentColor = btn.getAttribute("data-color");
-    
-                updateDisplay();
-                stopTimer(); // 실행 중이면 멈춤
+                currentColor = btn.dataset.color;
+
+                resetTimer();
             });
         });
-    
-        updateDisplay(); // 초기 표시
-    </script>
 
+        // 초기화 및 기본 셋팅
+        resetTimer();
+    </script>
 </body>
 </html>
