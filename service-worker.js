@@ -15,7 +15,7 @@ const CACHE_ASSETS = [
   '/Timer/Stop.png',
   '/Timer/Reset.png',
   '/Timer/.nojekyll',
-  '/Timer/service-worker.js'/
+  '/Timer/service-worker.js'
 ];
 
 self.addEventListener('install', (event) => {
