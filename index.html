@@ -126,6 +126,11 @@
     </style>
 
     <script>
+        const timerDisplay = document.querySelector(".timer-text");
+        const playButton = document.getElementById("playButton");
+        const stopButton = document.getElementById("stopButton");
+        const resetButton = document.getElementById("resetButton");
+
         const totalTime = 11; // 10초 테스트용 (초단위)
         let timeLeft = totalTime;
         let previousTimestamp = null;
