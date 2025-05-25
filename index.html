@@ -159,14 +159,14 @@
         const fillCircle = document.getElementById("fillCircle");
         const alarmInput = document.getElementById("alarmFileInput");
 
-        let alarmAudio = null;
+        let alarmSound = null;
 
         // 알람 소리 파일 선택 핸들러
         alarmInput.addEventListener("change", event => {
             const file = event.target.files[0];
             if (file) {
-                alarmAudio = new Audio(URL.createObjectURL(file));
-                alarmAudio.load();
+                alarmSound = new Audio(URL.createObjectURL(file));
+                alarmSound.load();
                 alert("✅ 알람 소리 파일이 설정되었습니다!");
             }
         });
@@ -244,11 +244,11 @@
                     stopTimer();
                     timeLeft = 0;
                     updateDisplay();
-                    if (alarmAudio) {
-                        alarmAudio.play();
+                    if (alarmSound) {
+                        alarmSound.play();
                         alert("⏰ 시간이 끝났습니다!");
-                        alarmAudio.pause();
-                        alarmAudio.currentTime = 0;
+                        alarmSound.pause();
+                        alarmSound.currentTime = 0;
                     } else {
                         alert("⏰ 시간이 끝났습니다!");
                     }
