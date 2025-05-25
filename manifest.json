@@ -2,7 +2,7 @@
   "name": "Hanil Timer",
   "short_name": "Timer",
   "description": "for Hanil High",
-  "start_url": "/Timer/exam-timer.html",
+  "start_url": "/Timer/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
