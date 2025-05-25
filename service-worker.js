@@ -1,12 +1,18 @@
 const CACHE_NAME = 'my-cache';
 
 const CACHE_ASSETS = [
-    '/Tools/',
-    '/Tools/index.html',
-    '/Tools/manifest.json',
-    '/Tools/icon-192.png',
-    '/Tools/icon-512.png',
-    '/Tools/service-worker.js'
+    '/Timer/',
+    '/Timer/index.html',
+    '/Timer/stopwatch.html',
+    '/Timer/timer.html',
+    '/Timer/manifest.json',
+    '/Timer/icon-192.png',
+    '/Timer/icon-512.png',
+    '/Timer/PracticeExamTimer.png', '/Timer/Stopwatch.png', '/Timer/Timer.png',
+    '/Timer/Play.png', '/Timer/Stop.png', '/Timer/Reset.png',
+    '/Timer/alarm.mp3',
+    '/Timer/.nojekyll',
+    '/Timer/service-worker.js'
 ];
 
 self.addEventListener('install', (event) => {
