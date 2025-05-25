@@ -146,12 +146,22 @@
         }
     
         function updateDisplay() {
-            const minutes = String(Math.floor(timeLeft / 60)).padStart(2, '0');
-            const seconds = String(Math.floor(timeLeft % 60)).padStart(2, '0');
-            timerDisplay.textContent = `${minutes}:${seconds}`;
+            const time = Math.max(0, Math.floor(timeLeft));
+        
+            // 특별 조건: 총 시간이 6000초(100분)일 때만 예외적으로 표시
+            if (totalTime === 6000) {
+                const minutes = Math.floor(time / 60); // 100, 99, ...
+                const seconds = Math.floor(time % 60); // 0 ~ 59
+                timerDisplay.textContent = `${minutes}:${seconds}`;
+            } else {
+                const minutes = String(Math.floor(time / 60)).padStart(2, '0');
+                const seconds = String(time % 60).padStart(2, '0');
+                timerDisplay.textContent = `${minutes}:${seconds}`;
+            }
+        
             updateProgress();
         }
-    
+
         function stopTimer() {
             clearInterval(timerInterval);
             stopButton.classList.add("hidden");
