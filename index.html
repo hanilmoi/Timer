@@ -38,7 +38,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/Tools/service-worker.js')
+                navigator.serviceWorker.register('/Timer/service-worker.js')
                     .then(() => console.log('✅ Service Worker 등록 성공'))
                     .catch((err) => console.error('❌ Service Worker 등록 실패:', err));
             });
