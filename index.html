@@ -95,9 +95,16 @@
             </div>
             <div data-layer="Ellipse 4" class="Ellipse4 w-[100px] h-[100px] left-[466px] top-[65px] absolute bg-[#f0f0f0] rounded-full shadow-[inset_0px_1px_10px_0px_rgba(0,0,0,0.25)]"></div>
             <img data-layer="reset 1" class="Reset1 w-[41.67px] h-[41.67px] left-[495.17px] top-[94.17px] absolute" src="/Timer/Reset.png" />
-            <div data-layer="Play/Stop" data-property-1="Default" class="PlayStop w-[100px] h-[100px] left-0 top-[65px] absolute">
-                <div data-layer="Ellipse 3" class="Ellipse3 w-[100px] h-[100px] left-0 top-0 absolute bg-[#f0f0f0] rounded-full shadow-[inset_0px_1px_10px_0px_rgba(0,0,0,0.25)]"></div>
-                <img data-layer="play 1" class="Play1 w-[41.67px] h-[41.67px] left-[33px] top-[29px] absolute" src="/Timer/Play.png" />
+            <!-- Play 버튼 -->
+            <div id="playButton" class="PlayStop w-[100px] h-[100px] left-0 top-[65px] absolute cursor-pointer">
+                <div class="Ellipse3 w-[100px] h-[100px] bg-[#f0f0f0] rounded-full shadow-[inset_0px_1px_10px_0px_rgba(0,0,0,0.25)]"></div>
+                <img src="/Timer/Play.png" class="w-[41.67px] h-[41.67px] left-[33px] top-[29px] absolute" />
+            </div>
+            
+            <!-- Stop 버튼 (초기에는 숨김 처리) -->
+            <div id="stopButton" class="PlayStop w-[100px] h-[100px] left-0 top-[65px] absolute hidden cursor-pointer">
+                <div class="Ellipse3 w-[100px] h-[100px] bg-[#f0f0f0] rounded-full shadow-[inset_0px_1px_10px_0px_rgba(0,0,0,0.25)]"></div>
+                <img src="/Timer/Stop.png" class="w-[41.67px] h-[41.67px] left-[33px] top-[29px] absolute" />
             </div>
             <div data-layer="80:00" class="00 left-[217px] top-[89px] absolute justify-center text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">80:00</div>
         </div>
@@ -117,6 +124,29 @@
             stopButton.classList.add("hidden");
             playButton.classList.remove("hidden");
         });
+
+        let timerInterval;
+        let timeLeft = 80 * 60;
+        
+        function updateDisplay() {
+            const minutes = Math.floor(timeLeft / 60).toString().padStart(2, "0");
+            const seconds = (timeLeft % 60).toString().padStart(2, "0");
+            document.querySelector(".00").textContent = `${minutes}:${seconds}`;
+        }
+        
+        playButton.addEventListener("click", () => {
+            timerInterval = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    updateDisplay();
+                }
+            }, 1000);
+        });
+        
+        stopButton.addEventListener("click", () => {
+            clearInterval(timerInterval);
+        });
+
     </script>
 
 </body>
