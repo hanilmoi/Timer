@@ -112,7 +112,7 @@
                    class="w-[33.33px] h-[33.33px] left-[33px] top-[33px] absolute"
                    style="pointer-events: none;" />
             </div>
-            <div data-layer="80:00" class="timer-text left-[217px] top-[89px] absolute justify-center text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">80:00</div>
+            <div data-layer="80:00" class="timer-text left-[217px] top-[89px] absolute justify-center text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">00:01</div>
         </div>
         <div class="absolute bottom-0 right-10 text-black text-xl font-NanumMyeongjo">한일고등학교 학생자치정부 정보부</div>
     </div>
@@ -124,7 +124,7 @@
         const timerDisplay = document.querySelector(".timer-text");
     
         let timerInterval;
-        let timeLeft = 80 * 60; // 80분
+        let timeLeft = 1; // 80분
     
         function updateDisplay() {
             const minutes = String(Math.floor(timeLeft / 60)).padStart(2, '0');
