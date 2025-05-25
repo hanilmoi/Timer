@@ -1,69 +1,80 @@
 const CACHE_NAME = 'my-cache-v1';
 
 const CACHE_ASSETS = [
-    '/Timer/',
-    '/Timer/index.html', '/Timer/stopwatch.html', '/Timer/timer.html',
-    '/Timer/manifest.json',
-    '/Timer/icon-192.png', '/Timer/icon-512.png',
-    '/Timer/PracticeExamTimer.png', '/Timer/Stopwatch.png', '/Timer/Timer.png',
-    '/Timer/Play.png', '/Timer/Stop.png', '/Timer/Reset.png',
-    '/Timer/alarm.mp3',
-    '/Timer/.nojekyll',
-    '/Timer/service-worker.js'
+  '/Timer/',
+  '/Timer/index.html',
+  '/Timer/stopwatch.html',
+  '/Timer/timer.html',
+  '/Timer/manifest.json',
+  '/Timer/icon-192.png',
+  '/Timer/icon-512.png',
+  '/Timer/PracticeExamTimer.png',
+  '/Timer/Stopwatch.png',
+  '/Timer/Timer.png',
+  '/Timer/Play.png',
+  '/Timer/Stop.png',
+  '/Timer/Reset.png',
+  '/Timer/alarm.mp3',
+  '/Timer/.nojekyll',
+  // '/Timer/service-worker.js' 보통 서비스워커는 캐시 안 함, 필요하면 추가
 ];
 
-// ✅ 설치 단계 - 개별 캐싱 + 에러 로깅
 self.addEventListener('install', (event) => {
-    event.waitUntil(
-        caches.open(CACHE_NAME).then((cache) => {
-            return Promise.all(
-                CACHE_ASSETS.map((asset) =>
-                    cache.add(asset).catch((err) => {
-                        console.warn(`⚠️ 캐싱 실패: ${asset}`, err);
-                    })
-                )
-            );
-        })
-    );
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(async (cache) => {
+      for (const asset of CACHE_ASSETS) {
+        try {
+          const response = await fetch(asset);
+          await cache.put(asset, response.clone());
+          console.log(`✅ install: ${asset} 캐싱 성공`);
+        } catch (err) {
+          console.warn(`❌ install: ${asset} 캐싱 실패`, err);
+        }
+      }
+    })
+  );
+  self.skipWaiting(); // 설치 후 즉시 활성화 (선택사항)
 });
 
-// ✅ 활성화 단계 - 이전 캐시 정리
 self.addEventListener('activate', (event) => {
-    event.waitUntil(
-        caches.keys().then((cacheNames) =>
-            Promise.all(
-                cacheNames
-                    .filter((name) => name !== CACHE_NAME)
-                    .map((name) => caches.delete(name))
-            )
-        )
-    );
+  event.waitUntil(
+    caches.keys().then((cacheNames) =>
+      Promise.all(
+        cacheNames
+          .filter((name) => name !== CACHE_NAME)
+          .map((name) => caches.delete(name))
+      )
+    )
+  );
+  self.clients.claim(); // 활성화 즉시 페이지 컨트롤 (선택사항)
 });
 
-// ✅ fetch 이벤트 - Cache First 전략
 self.addEventListener('fetch', (event) => {
-    const requestUrl = event.request.url;
+  const requestUrl = event.request.url;
 
-    // 확장 프로그램 요청은 무시
-    if (requestUrl.startsWith('chrome-extension://')) {
-        return;
-    }
+  if (requestUrl.startsWith('chrome-extension://')) {
+    return;
+  }
 
-    event.respondWith(
-        caches.match(event.request).then((cachedResponse) => {
-            if (cachedResponse) return cachedResponse;
-
-            return fetch(event.request)
-                .then((networkResponse) => {
-                    return caches.open(CACHE_NAME).then((cache) => {
-                        cache.put(event.request, networkResponse.clone());
-                        return networkResponse;
-                    });
-                })
-                .catch(() =>
-                    caches.match('/Timer/index.html') ||
-                    new Response('⚠️ 오프라인이고, 캐시도 없습니다.', { status: 404 })
-                );
-        })
-    );
+  event.respondWith(
+    caches.match(event.request).then((cacheRes) => {
+      return (
+        cacheRes ||
+        fetch(event.request)
+          .then((fetchRes) => {
+            return caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, fetchRes.clone());
+              return fetchRes;
+            });
+          })
+          .catch(() => {
+            // 네트워크 실패 시 캐시 없으면 기본 에러 응답
+            return new Response('⚠️ 네트워크 오류 & 캐시 없음', {
+              status: 404,
+              statusText: 'Not Found',
+            });
+          })
+      );
+    })
+  );
 });
