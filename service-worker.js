@@ -16,7 +16,7 @@ const CACHE_ASSETS = [
   '/Timer/Reset.png',
   '/Timer/alarm.mp3',
   '/Timer/.nojekyll',
-  // '/Timer/service-worker.js' 보통 서비스워커는 캐시 안 함, 필요하면 추가
+  '/Timer/service-worker.js'
 ];
 
 self.addEventListener('install', (event) => {
