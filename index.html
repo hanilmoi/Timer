@@ -100,13 +100,17 @@
             </div>
             <!-- Play 버튼 -->
             <div id="playButton" class="PlayStop w-[100px] h-[100px] left-0 top-[65px] absolute cursor-pointer">
-                <div class="Ellipse3 w-[100px] h-[100px] bg-[#f0f0f0] rounded-full shadow-[inset_0px_1px_10px_0px_rgba(0,0,0,0.25)]"></div>
-                <img src="/Timer/Play.png" class="w-[41.67px] h-[41.67px] left-[33px] top-[29px] absolute" />
+              <div class="Ellipse3 w-[100px] h-[100px] bg-[#f0f0f0] rounded-full shadow-[inset_0px_1px_10px_0px_rgba(0,0,0,0.25)]"></div>
+              <img src="/Timer/Play.png"
+                   class="w-[41.67px] h-[41.67px] left-[33px] top-[29px] absolute"
+                   style="pointer-events: none;" />
             </div>
-            <!-- Stop 버튼 (초기에는 숨김 처리) -->
+            <!-- Stop 버튼 -->
             <div id="stopButton" class="PlayStop w-[100px] h-[100px] left-0 top-[65px] absolute hidden cursor-pointer">
-                <div class="Ellipse3 w-[100px] h-[100px] bg-[#f0f0f0] rounded-full shadow-[inset_0px_1px_10px_0px_rgba(0,0,0,0.25)]"></div>
-                <img src="/Timer/Stop.png" class="w-[33.33px] h-[33.33px] left-[33px] top-[33px] absolute" />
+              <div class="Ellipse3 w-[100px] h-[100px] bg-[#f0f0f0] rounded-full shadow-[inset_0px_1px_10px_0px_rgba(0,0,0,0.25)]"></div>
+              <img src="/Timer/Stop.png"
+                   class="w-[33.33px] h-[33.33px] left-[33px] top-[33px] absolute"
+                   style="pointer-events: none;" />
             </div>
             <div data-layer="80:00" class="timer-text left-[217px] top-[89px] absolute justify-center text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">80:00</div>
         </div>
