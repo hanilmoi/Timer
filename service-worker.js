@@ -14,26 +14,14 @@ const CACHE_ASSETS = [
   '/Timer/Play.png',
   '/Timer/Stop.png',
   '/Timer/Reset.png',
-  '/Timer/alarm.mp3',
   '/Timer/.nojekyll',
-  '/Timer/service-worker.js'
 ];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(async (cache) => {
-      for (const asset of CACHE_ASSETS) {
-        try {
-          const response = await fetch(asset);
-          await cache.put(asset, response.clone());
-          console.log(`✅ install: ${asset} 캐싱 성공`);
-        } catch (err) {
-          console.warn(`❌ install: ${asset} 캐싱 실패`, err);
-        }
-      }
-    })
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(CACHE_ASSETS))
   );
-  self.skipWaiting(); // 설치 후 즉시 활성화 (선택사항)
+  self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
@@ -46,34 +34,22 @@ self.addEventListener('activate', (event) => {
       )
     )
   );
-  self.clients.claim(); // 활성화 즉시 페이지 컨트롤 (선택사항)
+  self.clients.claim();
 });
 
 self.addEventListener('fetch', (event) => {
-  const requestUrl = event.request.url;
-
-  if (requestUrl.startsWith('chrome-extension://')) {
-    return;
-  }
+  if (event.request.url.startsWith('chrome-extension://')) return;
 
   event.respondWith(
-    caches.match(event.request).then((cacheRes) => {
+    caches.match(event.request).then((cached) => {
       return (
-        cacheRes ||
-        fetch(event.request)
-          .then((fetchRes) => {
-            return caches.open(CACHE_NAME).then((cache) => {
-              cache.put(event.request, fetchRes.clone());
-              return fetchRes;
-            });
-          })
-          .catch(() => {
-            // 네트워크 실패 시 캐시 없으면 기본 에러 응답
-            return new Response('⚠️ 네트워크 오류 & 캐시 없음', {
-              status: 404,
-              statusText: 'Not Found',
-            });
-          })
+        cached ||
+        fetch(event.request).then((response) => {
+          return caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, response.clone());
+            return response;
+          });
+        })
       );
     })
   );
