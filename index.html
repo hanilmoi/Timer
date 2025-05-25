@@ -202,15 +202,6 @@
         playButton.addEventListener("click", () => {
             playButton.classList.add("hidden");
             stopButton.classList.remove("hidden");
-
-            alarmSound.volume = 0;
-            alarmSound.play().then(() => {
-                alarmSound.pause();
-                alarmSound.currentTime = 0;
-                alarmSound.volume = 1; // 볼륨 복원
-            }).catch(() => {
-                // 재생 권한 거부 시 무시
-            });
     
             const startTime = performance.now() - (totalTime - timeLeft) * 1000;
     
@@ -223,10 +214,10 @@
                     clearInterval(timerInterval);
                     timeLeft = 0;
                     updateDisplay();
-                    alarmSound.play();
+                    alarmAudio.play();
                     alert("⏰ 시간이 끝났습니다!");
-                    alarmSound.pause();        // 여기서 재생 멈춤
-                    alarmSound.currentTime = 0; // 처음부터 다시 재생 준비
+                    alarmAudio.pause();        // 여기서 재생 멈춤
+                    alarmAudio.currentTime = 0; // 처음부터 다시 재생 준비
                     stopButton.classList.add("hidden");
                     playButton.classList.remove("hidden");
                     return;
