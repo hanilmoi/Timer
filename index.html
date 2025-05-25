@@ -89,9 +89,14 @@
   <!-- 메인 영역 -->
     <div class="ml-[174px] w-[906px] flex justify-center items-center h-[400px] relative">
         <div data-layer="Clock" class="Clock w-[566px] h-[250px] relative overflow-hidden">
-            <div data-layer="과목별 타이머" data-property-1="Default" class="w-[250px] h-[250px] left-[158px] top-0 absolute">
-                <div data-layer="Ellipse 2" class="Ellipse2 w-[250px] h-[250px] left-0 top-0 absolute bg-[#00af84] rounded-full"></div>
-                <div data-layer="Ellipse 1" class="Ellipse1 w-[218.75px] h-[218.75px] left-[15.62px] top-[15.62px] absolute bg-white rounded-full shadow-[inset_0px_4px_10px_0px_rgba(0,0,0,0.25)]"></div>
+            <div data-layer="과목별 타이머" class="w-[250px] h-[250px] left-[158px] top-0 absolute">
+              <!-- 프로그레스 배경 -->
+              <div id="progressCircle" class="w-full h-full rounded-full relative">
+                <!-- 회전 채우기 원 -->
+                <div id="fillCircle" class="absolute inset-0 rounded-full bg-[conic-gradient(#00af84_0%,#f0f0f0_0%)]"></div>
+                <!-- 안쪽 흰색 원 (시계 중앙 효과) -->
+                <div class="absolute inset-[15.62px] rounded-full bg-white shadow-[inset_0px_4px_10px_0px_rgba(0,0,0,0.25)]"></div>
+              </div>
             </div>
             <!-- Reset 버튼 -->
             <div id="resetButton" class="w-[100px] h-[100px] left-[466px] top-[65px] absolute cursor-pointer">
@@ -116,7 +121,13 @@
         </div>
         <div class="absolute bottom-0 right-10 text-black text-xl font-NanumMyeongjo">한일고등학교 학생자치정부 정보부</div>
     </div>
-    
+
+    <style>
+      #fillCircle {
+        background: conic-gradient(#00af84 0%, #f0f0f0 0%);
+      }
+    </style>
+
     <script>
         const playButton = document.getElementById("playButton");
         const stopButton = document.getElementById("stopButton");
@@ -126,10 +137,17 @@
         let timerInterval;
         let timeLeft = 1; // 80분
     
+        function updateProgress() {
+            const percent = (1 - timeLeft / (80 * 60)) * 100;
+            document.getElementById('fillCircle').style.background = 
+                `conic-gradient(#00af84 ${percent}%, #f0f0f0 ${percent}%)`;
+        }
+        
         function updateDisplay() {
             const minutes = String(Math.floor(timeLeft / 60)).padStart(2, '0');
             const seconds = String(timeLeft % 60).padStart(2, '0');
             timerDisplay.textContent = `${minutes}:${seconds}`;
+            updateProgress(); // 프로그레스 바 업데이트
         }
     
         playButton.addEventListener("click", () => {
