@@ -113,7 +113,7 @@
                 <div class="Ellipse3 w-[100px] h-[100px] bg-[#f0f0f0] rounded-full shadow-[inset_0px_1px_10px_0px_rgba(0,0,0,0.25)]"></div>
                 <img src="/Timer/Stop.png" class="w-[33.33px] h-[33.33px] left-[33px] top-[33px] absolute" style="pointer-events: none;" />
             </div>
-            <div data-layer="80:00" class="timer-text left-[217px] top-[89px] absolute justify-center text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">80:00</div>
+            <div data-layer="80:00" class="timer-text left-[217px] top-[89px] absolute justify-center text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">00:00</div>
         </div>
         <div class="absolute bottom-0 right-10 text-black text-xl font-NanumMyeongjo">한일고등학교 학생자치정부 정보부</div>
     </div>
@@ -126,61 +126,63 @@
     </style>
 
     <script>
-        const playButton = document.getElementById("playButton");
-        const stopButton = document.getElementById("stopButton");
-        const resetButton = document.getElementById("resetButton");
-        const timerDisplay = document.querySelector(".timer-text");
-
-        let timerInterval;
-        const totalTime = 10; // 80분 (초)
+        const totalTime = 10; // 10초 테스트용 (초단위)
         let timeLeft = totalTime;
-
+        let previousTimestamp = null;
+        
         function updateProgress() {
             const percent = (1 - timeLeft / totalTime) * 100;
             document.getElementById('fillCircle').style.background = 
-                `conic-gradient(#f0f0f0 ${percent}%, #00af84 ${percent}%)`;
+                `conic-gradient(#00af84 ${percent}%, #f0f0f0 ${percent}%)`;
         }
         
         function updateDisplay() {
             const minutes = String(Math.floor(timeLeft / 60)).padStart(2, '0');
-            const seconds = String(timeLeft % 60).padStart(2, '0');
+            const seconds = String(Math.floor(timeLeft % 60)).padStart(2, '0');
             timerDisplay.textContent = `${minutes}:${seconds}`;
             updateProgress();
         }
-
+        
+        let timerInterval;
         playButton.addEventListener("click", () => {
             playButton.classList.add("hidden");
             stopButton.classList.remove("hidden");
-
+        
+            let startTime = performance.now();
+        
             timerInterval = setInterval(() => {
-                if (timeLeft > 0) {
-                    timeLeft--;
-                    updateDisplay();
-                } else {
+                const now = performance.now();
+                const elapsed = (now - startTime) / 1000; // 초단위 경과시간
+                timeLeft = totalTime - elapsed;
+        
+                if (timeLeft <= 0) {
                     clearInterval(timerInterval);
+                    timeLeft = 0;
+                    updateDisplay();
                     alert("⏰ 시간이 끝났습니다!");
                     stopButton.classList.add("hidden");
                     playButton.classList.remove("hidden");
+                    return;
                 }
-            }, 1000);
+                updateDisplay();
+            }, 50); // 50ms 간격으로 부드럽게 업데이트
         });
-
+        
         stopButton.addEventListener("click", () => {
             stopButton.classList.add("hidden");
             playButton.classList.remove("hidden");
             clearInterval(timerInterval);
         });
-
+        
         resetButton.addEventListener("click", () => {
             clearInterval(timerInterval);
             timeLeft = totalTime;
             updateDisplay();
-
+        
             stopButton.classList.add("hidden");
             playButton.classList.remove("hidden");
         });
-
-        // 초기화 화면 표시
+        
         updateDisplay();
     </script>
 
