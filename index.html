@@ -198,7 +198,7 @@
                 // 재생 권한 거부 시 무시
             });
     
-            const startTime = performance.now();
+            const startTime = performance.now() - (totalTime - timeLeft) * 1000;
     
             timerInterval = setInterval(() => {
                 const now = performance.now();
