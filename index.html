@@ -100,6 +100,10 @@
 
     <!-- 메인 영역 -->
     <div class="ml-[174px] w-[906px] flex justify-center items-center h-[400px] relative">
+        <div class="absolute top-[20px] right-[40px]">
+            <label class="text-black text-sm font-medium block mb-1" for="alarmFileInput">🔔 알람 소리 선택</label>
+            <input type="file" id="alarmFileInput" accept="audio/*" class="text-sm" />
+        </div>
         <div data-layer="Clock" class="Clock w-[566px] h-[250px] relative overflow-hidden">
             <div data-layer="과목별 타이머" class="w-[250px] h-[250px] left-[158px] top-0 absolute">
                 <!-- 프로그레스 배경 -->
@@ -143,8 +147,17 @@
         const stopButton = document.getElementById("stopButton");
         const resetButton = document.getElementById("resetButton");
         const fillCircle = document.getElementById("fillCircle");
-        const alarmSound = document.getElementById("alarmSound");
-    
+        let alarmAudio = null;
+        
+        document.getElementById("alarmFileInput").addEventListener("change", (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                alarmAudio = new Audio(URL.createObjectURL(file));
+                alarmAudio.load();
+                alert("✅ 알람 소리 파일이 설정되었습니다!");
+            }
+        });
+
         let totalTime = 10; // 기본: 국어 (80분)
         let timeLeft = totalTime;
         let timerInterval;
