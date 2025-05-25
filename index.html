@@ -72,11 +72,15 @@
     <!-- 상단바 -->
     <div class="ml-[180px] w-[906px] h-[197px] p-8">
         <div class="flex justify-between items-center mb-8">
-            <div class="flex space-x-2 bg-graybg p-1 rounded-lg">
-                <div class="px-3 h-8 bg-white rounded shadow flex items-center text-black text-base font-medium">국어</div>
-                <div class="px-3 h-8 flex items-center text-black text-base font-medium">수학</div>
-                <div class="px-3 h-8 flex items-center text-black text-base font-medium">영어</div>
-                <div class="px-3 h-8 flex items-center text-black text-base font-medium">탐구</div>
+            <div class="flex space-x-2 bg-graybg p-1 rounded-lg" id="subjectButtons">
+                <div class="subject-btn px-3 h-8 bg-white rounded shadow flex items-center text-black text-base font-medium cursor-pointer"
+                     data-subject="국어" data-time="4800" data-color="#00AF84">국어</div>
+                <div class="subject-btn px-3 h-8 flex items-center text-black text-base font-medium cursor-pointer"
+                     data-subject="수학" data-time="6000" data-color="#E5007F">수학</div>
+                <div class="subject-btn px-3 h-8 flex items-center text-black text-base font-medium cursor-pointer"
+                     data-subject="영어" data-time="4200" data-color="#00A0E8">영어</div>
+                <div class="subject-btn px-3 h-8 flex items-center text-black text-base font-medium cursor-pointer"
+                     data-subject="탐구" data-time="1800" data-color="#004A95">탐구</div>
             </div>
             <div class="h-10 px-4 bg-black text-white text-base font-medium rounded-lg flex items-center">for Hanil High</div>
         </div>
@@ -130,36 +134,49 @@
         const playButton = document.getElementById("playButton");
         const stopButton = document.getElementById("stopButton");
         const resetButton = document.getElementById("resetButton");
-
-        const totalTime = 11; // 10초 테스트용 (초단위)
+        const fillCircle = document.getElementById("fillCircle");
+    
+        let totalTime = 4800; // 기본: 국어 (80분)
         let timeLeft = totalTime;
-        let previousTimestamp = null;
-        
+        let timerInterval;
+    
         function updateProgress() {
             const percent = (1 - timeLeft / totalTime) * 100;
-            document.getElementById('fillCircle').style.background = 
-                `conic-gradient(#f0f0f0 ${percent}%, #00af84 ${percent}%)`;
+            fillCircle.style.background = `conic-gradient(#f0f0f0 ${percent}%, ${currentColor} ${percent}%)`;
         }
-        
+    
         function updateDisplay() {
             const minutes = String(Math.floor(timeLeft / 60)).padStart(2, '0');
             const seconds = String(Math.floor(timeLeft % 60)).padStart(2, '0');
             timerDisplay.textContent = `${minutes}:${seconds}`;
             updateProgress();
         }
-        
-        let timerInterval;
+    
+        function stopTimer() {
+            clearInterval(timerInterval);
+            stopButton.classList.add("hidden");
+            playButton.classList.remove("hidden");
+        }
+    
+        function resetTimer() {
+            stopTimer();
+            timeLeft = totalTime;
+            updateDisplay();
+        }
+    
+        let currentColor = "#00AF84"; // 초기 국어 색상
+    
         playButton.addEventListener("click", () => {
             playButton.classList.add("hidden");
             stopButton.classList.remove("hidden");
-        
-            let startTime = performance.now();
-        
+    
+            const startTime = performance.now();
+    
             timerInterval = setInterval(() => {
                 const now = performance.now();
-                const elapsed = (now - startTime) / 1000; // 초단위 경과시간
+                const elapsed = (now - startTime) / 1000;
                 timeLeft = totalTime - elapsed;
-        
+    
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
                     timeLeft = 0;
@@ -169,26 +186,36 @@
                     playButton.classList.remove("hidden");
                     return;
                 }
+    
                 updateDisplay();
-            }, 50); // 50ms 간격으로 부드럽게 업데이트
+            }, 50);
         });
-        
-        stopButton.addEventListener("click", () => {
-            stopButton.classList.add("hidden");
-            playButton.classList.remove("hidden");
-            clearInterval(timerInterval);
+    
+        stopButton.addEventListener("click", stopTimer);
+        resetButton.addEventListener("click", resetTimer);
+    
+        // 🟢 과목 버튼 클릭 이벤트
+        document.querySelectorAll(".subject-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                // 1. 전체 버튼에서 배경 제거
+                document.querySelectorAll(".subject-btn").forEach(b => {
+                    b.classList.remove("bg-white", "shadow");
+                });
+    
+                // 2. 현재 버튼 강조
+                btn.classList.add("bg-white", "shadow");
+    
+                // 3. 시간 및 색상 변경
+                totalTime = parseInt(btn.getAttribute("data-time"));
+                timeLeft = totalTime;
+                currentColor = btn.getAttribute("data-color");
+    
+                updateDisplay();
+                stopTimer(); // 실행 중이면 멈춤
+            });
         });
-        
-        resetButton.addEventListener("click", () => {
-            clearInterval(timerInterval);
-            timeLeft = totalTime;
-            updateDisplay();
-        
-            stopButton.classList.add("hidden");
-            playButton.classList.remove("hidden");
-        });
-        
-        updateDisplay();
+    
+        updateDisplay(); // 초기 표시
     </script>
 
 </body>
