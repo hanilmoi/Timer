@@ -123,11 +123,11 @@
             <div class="flex space-x-2 bg-graybg p-1 rounded-lg" id="changeButtons">
                 <!-- 변경 버튼 : data-change, data-time(초) -->
                 <div class="change-btn px-3 h-8 bg-white rounded-lg shadow flex items-center text-black text-base font-medium cursor-pointer"
-                     data-change="타이머1" data-time="10">타이머1</div>
+                     data-change="타이머1" data-time="60">타이머1</div>
                 <div class="change-btn px-3 h-8 flex items-center text-black text-base font-medium cursor-pointer"
-                     data-change="타이머2" data-time="20">타이머2</div>
+                     data-change="타이머2" data-time="180">타이머2</div>
                 <div class="change-btn px-3 h-8 flex items-center text-black text-base font-medium cursor-pointer"
-                     data-change="타이머3" data-time="30">타이머3</div>
+                     data-change="타이머3" data-time="300">타이머3</div>
             </div>
             <div class="h-10 px-4 bg-black text-white text-base font-medium rounded-lg flex items-center">for Hanil High</div>
         </div>
@@ -317,13 +317,13 @@
         });
     
         const changeStates = {
-            "타이머1": { timeLeft: 10, running: false },
-            "타이머2": { timeLeft: 20, running: false },
-            "타이머3": { timeLeft: 30, running: false }
+            "타이머1": { timeLeft: 60, running: false },
+            "타이머2": { timeLeft: 120, running: false },
+            "타이머3": { timeLeft: 180, running: false }
         };
     
         let currentChange = "타이머1";
-        let totalTime = 10;
+        let totalTime = 60;
         let timeLeft = totalTime;
         let timerInterval = null;
     
