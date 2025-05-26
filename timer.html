@@ -286,13 +286,14 @@
         function setupEditableTimeBox(box, label) {
             box.style.cursor = "pointer";
             box.addEventListener("click", () => {
-                const input = prompt(`${label} 값을 입력하세요 (0~59):`, box.textContent);
+                const input = prompt(`${label} 값을 입력하세요 (${label === "시" ? "0~99" : "0~59"}):`, box.textContent);
                 if (input !== null) {
                     const num = parseInt(input);
-                    if (!isNaN(num) && num >= 0 && num <= 59) {
+                    const max = label === "시" ? 99 : 59;
+                    if (!isNaN(num) && num >= 0 && num <= max) {
                         box.textContent = String(num).padStart(2, '0');
                     } else {
-                        alert("❌ 0~59 사이의 숫자를 입력하세요.");
+                        alert(`❌ ${label}는 0~${max} 사이의 숫자여야 합니다.`);
                     }
                 }
             });
