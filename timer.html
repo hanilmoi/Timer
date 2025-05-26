@@ -35,6 +35,34 @@
             }
         }
     </script>
+    <style>
+        #fillCircle {
+            background: conic-gradient(#f0f0f0 0%, #CFDFFF 0%);
+            transition: background 1s linear;
+        }
+
+        .fade-slide-enter {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+
+        .fade-slide-enter-active {
+            transform: translateY(0);
+            opacity: 1;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+
+        .fade-slide-leave {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .fade-slide-leave-active {
+            transform: translateY(100%);
+            opacity: 0;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+    </style>
 </head>
 
 <body class="bg-white font-Inter">
@@ -128,46 +156,51 @@
             한일고등학교 학생자치정부 정보부
         </div>
 
-        <div data-layer="시간 설정" class="w-[540px] h-[441px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden">
-          <!-- 배경 및 제목 -->
-          <div class="Rectangle1 w-[540px] h-[574px] left-0 top-0 absolute bg-[#f0f0f0] rounded-[20px]"></div>
-          <div class="Title left-[50px] top-[50px] absolute inline-flex flex-col justify-start items-start gap-2">
-            <div class="text-black text-[34px] font-semibold font-['Inter'] leading-[37.40px]">시간 설정</div>
-            <div class="text-[#444444] text-base font-normal font-['Inter'] leading-normal">Time Setting</div>
-          </div>
-        
-          <!-- 시(hour) 그룹 -->
-          <div data-group="hour" class="absolute left-[50px] top-[183px]">
-            <div class="text-center text-[#444444] text-base font-normal font-['Inter'] leading-normal">hour</div>
-            <div class="w-[120px] h-20 mt-1 bg-[#d9d9d9] rounded-[20px] shadow-[inset_0px_2px_4px_rgba(0,0,0,0.25)]"></div>
-            <div class="absolute top-[28px] left-[37px] text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">00</div>
-          </div>
-        
-          <!-- 첫 번째 콜론 -->
-          <div class="absolute left-[181px] top-[191px] text-black text-[64px] font-normal font-['Inter'] leading-[96px]">:</div>
-        
-          <!-- 분(min) 그룹 -->
-          <div data-group="minute" class="absolute left-[210px] top-[183px]">
-            <div class="text-center text-[#444444] text-base font-normal font-['Inter'] leading-normal">min</div>
-            <div class="w-[120px] h-20 mt-1 bg-[#d9d9d9] rounded-[20px] shadow-[inset_0px_2px_4px_rgba(0,0,0,0.25)]"></div>
-            <div class="absolute top-[28px] left-[37px] text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">00</div>
-          </div>
-        
-          <!-- 두 번째 콜론 -->
-          <div class="absolute left-[341px] top-[191px] text-black text-[64px] font-normal font-['Inter'] leading-[96px]">:</div>
-        
-          <!-- 초(sec) 그룹 -->
-          <div data-group="second" class="absolute left-[370px] top-[183px]">
-            <div class="text-center text-[#444444] text-base font-normal font-['Inter'] leading-normal">sec</div>
-            <div class="w-[120px] h-20 mt-1 bg-[#d9d9d9] rounded-[20px] shadow-[inset_0px_2px_4px_rgba(0,0,0,0.25)]"></div>
-            <div class="absolute top-[28px] left-[37px] text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">00</div>
-          </div>
-        
-          <!-- 확인 버튼 그룹 -->
-          <div data-group="confirm" class="absolute left-[220px] top-[337px]">
-            <div class="w-[100px] h-10 bg-[#cfdfff] rounded-[10px]"></div>
-            <div class="absolute top-[8px] left-[35px] text-center text-[#444444] text-base font-normal font-['Inter'] leading-normal">확인</div>
-          </div>
+        <!-- 검정 배경 오버레이 -->
+        <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
+
+        <div id="timeSettingLayer" class="fixed w-[540px] h-[441px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-[20px] bg-[#f0f0f0] shadow-lg
+            transform translate-y-full opacity-0 transition-transform transition-opacity duration-400 z-50">
+                <!-- 배경 및 제목 -->
+                <div class="Rectangle1 w-[540px] h-[574px] left-0 top-0 absolute bg-[#f0f0f0] rounded-[20px]"></div>
+                <div class="Title left-[50px] top-[50px] absolute inline-flex flex-col justify-start items-start gap-2">
+                    <div class="text-black text-[34px] font-semibold font-['Inter'] leading-[37.40px]">시간 설정</div>
+                    <div class="text-[#444444] text-base font-normal font-['Inter'] leading-normal">Time Setting</div>
+                </div>
+                
+                <!-- 시(hour) 그룹 -->
+                <div data-group="hour" class="absolute left-[50px] top-[183px]">
+                    <div class="text-center text-[#444444] text-base font-normal font-['Inter'] leading-normal">hour</div>
+                    <div class="w-[120px] h-20 mt-1 bg-[#d9d9d9] rounded-[20px] shadow-[inset_0px_2px_4px_rgba(0,0,0,0.25)]"></div>
+                    <div class="absolute top-[28px] left-[37px] text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">00</div>
+                </div>
+                
+                <!-- 첫 번째 콜론 -->
+                <div class="absolute left-[181px] top-[191px] text-black text-[64px] font-normal font-['Inter'] leading-[96px]">:</div>
+                
+                <!-- 분(min) 그룹 -->
+                <div data-group="minute" class="absolute left-[210px] top-[183px]">
+                    <div class="text-center text-[#444444] text-base font-normal font-['Inter'] leading-normal">min</div>
+                    <div class="w-[120px] h-20 mt-1 bg-[#d9d9d9] rounded-[20px] shadow-[inset_0px_2px_4px_rgba(0,0,0,0.25)]"></div>
+                    <div class="absolute top-[28px] left-[37px] text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">00</div>
+                </div>
+                
+                <!-- 두 번째 콜론 -->
+                <div class="absolute left-[341px] top-[191px] text-black text-[64px] font-normal font-['Inter'] leading-[96px]">:</div>
+                
+                <!-- 초(sec) 그룹 -->
+                <div data-group="second" class="absolute left-[370px] top-[183px]">
+                    <div class="text-center text-[#444444] text-base font-normal font-['Inter'] leading-normal">sec</div>
+                    <div class="w-[120px] h-20 mt-1 bg-[#d9d9d9] rounded-[20px] shadow-[inset_0px_2px_4px_rgba(0,0,0,0.25)]"></div>
+                    <div class="absolute top-[28px] left-[37px] text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">00</div>
+                </div>
+                
+                <!-- 확인 버튼 그룹 -->
+                <div data-group="confirm" class="absolute left-[220px] top-[337px]">
+                    <div class="w-[100px] h-10 bg-[#cfdfff] rounded-[10px]"></div>
+                    <div class="absolute top-[8px] left-[35px] text-center text-[#444444] text-base font-normal font-['Inter'] leading-normal">확인</div>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -186,6 +219,41 @@
         const resetButton = document.getElementById("resetButton");
         const fillCircle = document.getElementById("fillCircle");
         const alarmInput = document.getElementById("alarmFileInput");
+        const timerText = document.querySelector(".timer-text");
+        const overlay = document.getElementById("overlay");
+        const timeSettingLayer = document.getElementById("timeSettingLayer");
+        const confirmBtn = timeSettingLayer.querySelector("[data-group='confirm']");
+        
+        // 레이어 열기 함수
+        function openTimeSetting() {
+            overlay.classList.remove("hidden");
+            setTimeout(() => {
+                overlay.style.opacity = "1";
+                timeSettingLayer.style.transform = "translateY(0)";
+                timeSettingLayer.style.opacity = "1";
+            }, 10); // 약간 지연을 줘야 transition 효과 발생
+        }
+        
+        // 레이어 닫기 함수
+        function closeTimeSetting() {
+            overlay.style.opacity = "0";
+            timeSettingLayer.style.transform = "translateY(100%)";
+            timeSettingLayer.style.opacity = "0";
+        
+            // transition 끝난 후 hidden 처리
+            setTimeout(() => {
+                overlay.classList.add("hidden");
+            }, 400); // transition duration과 동일하게
+        }
+        
+        // 시간 표시 클릭 시 레이어 열기
+        timerText.addEventListener("click", openTimeSetting);
+        
+        // 확인 버튼 클릭 시 레이어 닫기
+        confirmBtn.addEventListener("click", closeTimeSetting);
+
+        // 배경 오버레이 클릭 시 레이어 닫기
+        overlay.addEventListener("click", closeTimeSetting);
     
         let alarmSound = null;
         alarmInput.addEventListener("change", event => {
