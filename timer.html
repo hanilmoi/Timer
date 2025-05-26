@@ -1,281 +1,285 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Hanil Timer</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hanil Timer</title>
+    
+    <link rel="icon" href="/Timer/favicon.ico" type="image/x-icon" />
+    <link rel="manifest" href="/Timer/manifest.json" />
 
-  <link rel="icon" href="/Timer/favicon.ico" type="image/x-icon" />
-  <link rel="manifest" href="/Timer/manifest.json" />
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Anonymous+Pro&family=Nanum+Myeongjo&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Anonymous+Pro&family=Nanum+Myeongjo&display=swap" rel="stylesheet">
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            Inter: ['Inter', 'sans-serif'],
-            Anonymous_Pro: ['"Anonymous Pro"', 'monospace'],
-            NanumMyeongjo: ['"Nanum Myeongjo"', 'serif']
-          },
-          colors: {
-            hanilgreen: "#00AF84",
-            graylight: "#F0F0F0",
-            graymid: "#DFDFDF",
-            graybg: "#F7F7F7",
-            darkgray: "#444444"
-          }
+    <!-- Tailwind Custom Font & Color 설정 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        Inter: ['Inter', 'sans-serif'],
+                        Anonymous_Pro: ['"Anonymous Pro"', 'monospace'],
+                        NanumMyeongjo: ['"Nanum Myeongjo"', 'serif']
+                    },
+                    colors: {
+                        hanilgreen: "#00AF84",
+                        graylight: "#F0F0F0",
+                        graymid: "#DFDFDF",
+                        graybg: "#F7F7F7",
+                        darkgray: "#444444"
+                    }
+                }
+            }
         }
-      }
-    }
-  </script>
-  <style>
-    #fillCircle {
-      background: conic-gradient(#f0f0f0 0%, #CFDFFF 0%);
-      transition: background 1s linear;
-    }
-  </style>
+    </script>
 </head>
+
 <body class="bg-white font-Inter">
-  <!-- 사이드바 -->
-  <aside class="fixed left-0 top-0 w-[180px] h-screen bg-white border-r border-graymid p-6 flex flex-col justify-between">
-    <div>
-      <h1 class="text-black text-xl font-semibold mb-10">HANIL TIMER</h1>
-      <nav class="space-y-2">
-        <div class="px-2 h-10 flex items-center gap-4">
-          <span class="text-black text-base font-semibold">Features</span>
+
+    <!-- 사이드바 -->
+    <aside class="fixed left-0 top-0 w-[180px] h-screen bg-white border-r border-graymid p-6 flex flex-col justify-between">
+        <div>
+            <h1 class="text-black text-xl font-semibold mb-10 leading-[30px]">HANIL TIMER</h1>
+            <nav class="space-y-2">
+                <div class="px-2 h-10 flex items-center gap-4">
+                    <span class="text-black text-base font-semibold">Features</span>
+                </div>
+                <a href="index.html" class="block px-2 h-10 flex items-center gap-4 hover:bg-graybg rounded-lg">
+                    <img src="/Timer/images/PracticeExamTimer.png" alt="모의고사 아이콘" class="w-[25px] h-[25px]" />
+                    <span class="text-black text-base font-medium">모의고사</span>
+                </a>
+                <a href="stopwatch.html" class="block px-2 h-10 flex items-center gap-4 hover:bg-graybg rounded-lg">
+                    <img src="/Timer/images/Stopwatch.png" alt="스톱워치 아이콘" class="w-[25px] h-[26px]" />
+                    <span class="text-black text-base font-medium">스톱워치</span>
+                </a>
+                <div class="px-2 h-10 flex items-center gap-4 bg-graybg rounded-lg">
+                    <img src="/Timer/images/Timer.png" alt="타이머 아이콘" class="w-[25px] h-[25px]" />
+                    <span class="text-black text-base font-medium">타이머</span>
+                </div>
+            </nav>
         </div>
-        <a href="index.html" class="block px-2 h-10 flex items-center gap-4 hover:bg-graybg rounded-lg">
-          <img src="/Timer/images/PracticeExamTimer.png" alt="모의고사" class="w-[25px] h-[25px]" />
-          <span class="text-black text-base font-medium">모의고사</span>
-        </a>
-        <a href="stopwatch.html" class="block px-2 h-10 flex items-center gap-4 hover:bg-graybg rounded-lg">
-          <img src="/Timer/images/Stopwatch.png" alt="스톱워치" class="w-[25px] h-[26px]" />
-          <span class="text-black text-base font-medium">스톱워치</span>
-        </a>
-        <div class="px-2 h-10 flex items-center gap-4 bg-graybg rounded-lg">
-          <img src="/Timer/images/Timer.png" alt="타이머" class="w-[25px] h-[25px]" />
-          <span class="text-black text-base font-medium">타이머</span>
+        <div class="mt-4">
+            <label for="alarmFileInput" class="text-black text-sm font-medium block mb-1">🔔 알람 소리 선택</label>
+            <input type="file" id="alarmFileInput" accept="audio/*" class="text-sm w-full" />
         </div>
-      </nav>
-    </div>
-    <div class="mt-4">
-      <label for="alarmFileInput" class="text-black text-sm font-medium block mb-1">🔔 알람 소리 선택</label>
-      <input type="file" id="alarmFileInput" accept="audio/*" class="text-sm w-full" />
-    </div>
-  </aside>
-
-  <!-- 상단바 -->
-  <header class="ml-[180px] w-[906px] h-[197px] p-8">
-    <div class="flex justify-between items-center mb-8">
-      <div class="flex space-x-2 bg-graybg p-1 rounded-lg" id="changeButtons">
-        <div class="change-btn px-3 h-8 bg-white rounded-lg shadow flex items-center text-black text-base font-medium cursor-pointer" data-change="타이머1" data-time="10">타이머1</div>
-        <div class="change-btn px-3 h-8 flex items-center text-black text-base font-medium cursor-pointer" data-change="타이머2" data-time="20">타이머2</div>
-        <div class="change-btn px-3 h-8 flex items-center text-black text-base font-medium cursor-pointer" data-change="타이머3" data-time="30">타이머3</div>
-      </div>
-      <div class="h-10 px-4 bg-black text-white text-base font-medium rounded-lg flex items-center">for Hanil High</div>
-    </div>
-    <h2 class="text-black text-[34px] font-semibold">타이머</h2>
-    <p class="text-darkgray text-base font-normal">Timer</p>
-  </header>
-
-  <!-- 메인 타이머 -->
-  <main class="ml-[174px] w-[906px] flex justify-center items-center h-[400px] relative">
-    <section class="Clock w-[566px] h-[250px] relative overflow-hidden">
-      <div class="w-[250px] h-[250px] absolute left-[158px] top-0">
-        <div id="progressCircle" class="w-full h-full rounded-full relative">
-          <div id="fillCircle" class="absolute inset-0 rounded-full transition-background duration-1000 ease-linear"></div>
-          <div class="absolute inset-[15.62px] rounded-full bg-white shadow-[inset_0_4px_10px_rgba(0,0,0,0.25)]"></div>
+    </aside>
+    
+    <!-- 상단바 -->
+    <header class="ml-[180px] w-[906px] h-[197px] p-8">
+        <div class="flex justify-between items-center mb-8">
+            <div class="flex space-x-2 bg-graybg p-1 rounded-lg" id="changeButtons">
+                <!-- 변경 버튼 : data-change, data-time(초) -->
+                <div class="change-btn px-3 h-8 bg-white rounded-lg shadow flex items-center text-black text-base font-medium cursor-pointer"
+                     data-change="타이머1" data-time="10">타이머1</div>
+                <div class="change-btn px-3 h-8 flex items-center text-black text-base font-medium cursor-pointer"
+                     data-change="타이머2" data-time="20">타이머2</div>
+                <div class="change-btn px-3 h-8 flex items-center text-black text-base font-medium cursor-pointer"
+                     data-change="타이머3" data-time="30">타이머3</div>
+            </div>
+            <div class="h-10 px-4 bg-black text-white text-base font-medium rounded-lg flex items-center">for Hanil High</div>
         </div>
-      </div>
-
-      <button id="resetButton" class="w-[100px] h-[100px] absolute left-[466px] top-[65px] cursor-pointer">
-        <div class="w-full h-full bg-[#f0f0f0] rounded-full shadow-[inset_0_1px_10px_rgba(0,0,0,0.25)]"></div>
-        <img src="/Timer/images/Reset.png" class="w-[41.67px] h-[41.67px] absolute left-[29px] top-[29px]" />
-      </button>
-
-      <button id="playButton" class="w-[100px] h-[100px] absolute left-0 top-[65px] cursor-pointer">
-        <div class="w-full h-full bg-[#f0f0f0] rounded-full shadow-[inset_0_1px_10px_rgba(0,0,0,0.25)]"></div>
-        <img src="/Timer/images/Play.png" class="w-[41.67px] h-[41.67px] absolute left-[33px] top-[29px]" />
-      </button>
-
-      <button id="stopButton" class="w-[100px] h-[100px] absolute left-0 top-[65px] cursor-pointer hidden">
-        <div class="w-full h-full bg-[#f0f0f0] rounded-full shadow-[inset_0_1px_10px_rgba(0,0,0,0.25)]"></div>
-        <img src="/Timer/images/Stop.png" class="w-[33.33px] h-[33.33px] absolute left-[33px] top-[33px]" />
-      </button>
-
-      <div class="timer-text absolute left-[217px] top-[89px] flex justify-center text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px] cursor-pointer">
-        00:00
-      </div>
-    </section>
-
-    <!-- 투명 배경 + 설정 모달 (슬라이드업) -->
-    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
-      <div id="modalBox" class="bg-[#f0f0f0] rounded-[20px] w-[540px] h-[350px] absolute bottom-0 left-1/2 -translate-x-1/2 transform transition-transform duration-300 translate-y-full">
-        <div class="p-8">
-          <h2 class="text-[28px] font-semibold">시간 설정</h2>
-          <div class="flex justify-center items-center gap-4 mt-6">
-            <input id="inputHour" type="number" min="0" max="99" value="0" class="w-[80px] text-center text-4xl rounded p-2 bg-white" />
-            <span class="text-4xl">:</span>
-            <input id="inputMin" type="number" min="0" max="59" value="0" class="w-[80px] text-center text-4xl rounded p-2 bg-white" />
-            <span class="text-4xl">:</span>
-            <input id="inputSec" type="number" min="0" max="59" value="0" class="w-[80px] text-center text-4xl rounded p-2 bg-white" />
-          </div>
-          <div class="text-center mt-8">
-            <button id="confirmTime" class="px-6 py-2 bg-blue-500 text-white rounded-md">확인</button>
-          </div>
+        <div>
+            <h2 class="text-black text-[34px] font-semibold leading-[37.40px]">타이머</h2>
+            <p class="text-darkgray text-base font-normal">Timer</p>
         </div>
-      </div>
-    </div>
+    </header>
 
-    <div class="fixed bottom-4 right-4 text-black text-xl font-NanumMyeongjo">한일고등학교 학생자치정부 정보부</div>
-  </main>
+    <!-- 메인 타이머 영역 -->
+    <main class="ml-[174px] w-[906px] flex justify-center items-center h-[400px] relative">
+        <section data-layer="Clock" class="Clock w-[566px] h-[250px] relative overflow-hidden">
+            <div data-layer="과목별 타이머" class="w-[250px] h-[250px] absolute left-[158px] top-0">
+                <!-- 프로그레스 배경 -->
+                <div id="progressCircle" class="w-full h-full rounded-full relative">
+                    <!-- 진행 채우기 원 -->
+                    <div id="fillCircle" class="absolute inset-0 rounded-full bg-[conic-gradient(#f0f0f0_0%,#00af84_0%)] transition-background duration-1000 ease-linear"></div>
+                    <!-- 중앙 흰색 원 (입체감 효과) -->
+                    <div class="absolute inset-[15.62px] rounded-full bg-white shadow-[inset_0px_4px_10px_0px_rgba(0,0,0,0.25)]"></div>
+                </div>
+            </div>
 
-  <script>
-    const timerDisplay = document.querySelector(".timer-text");
-    const playButton = document.getElementById("playButton");
-    const stopButton = document.getElementById("stopButton");
-    const resetButton = document.getElementById("resetButton");
-    const fillCircle = document.getElementById("fillCircle");
-    const alarmInput = document.getElementById("alarmFileInput");
+            <!-- Reset 버튼 -->
+            <button id="resetButton" aria-label="타이머 초기화" class="w-[100px] h-[100px] absolute left-[466px] top-[65px] cursor-pointer">
+                <div class="w-full h-full bg-[#f0f0f0] rounded-full shadow-[inset_0px_1px_10px_0px_rgba(0,0,0,0.25)]"></div>
+                <img src="/Timer/images/Reset.png" alt="리셋 아이콘" class="w-[41.67px] h-[41.67px] absolute left-[29px] top-[29px]" />
+            </button>
 
-    const overlay = document.getElementById("overlay");
-    const modalBox = document.getElementById("modalBox");
-    const inputHour = document.getElementById("inputHour");
-    const inputMin = document.getElementById("inputMin");
-    const inputSec = document.getElementById("inputSec");
-    const confirmTime = document.getElementById("confirmTime");
+            <!-- Play 버튼 -->
+            <button id="playButton" aria-label="타이머 시작" class="w-[100px] h-[100px] absolute left-0 top-[65px] cursor-pointer">
+                <div class="w-full h-full bg-[#f0f0f0] rounded-full shadow-[inset_0px_1px_10px_0px_rgba(0,0,0,0.25)]"></div>
+                <img src="/Timer/images/Play.png" alt="플레이 아이콘" class="w-[41.67px] h-[41.67px] absolute left-[33px] top-[29px]" />
+            </button>
 
-    let alarmSound = null;
-    alarmInput.addEventListener("change", e => {
-      const file = e.target.files[0];
-      if (file) {
-        alarmSound = new Audio(URL.createObjectURL(file));
-        alarmSound.load();
-        alert("✅ 알람 소리 파일이 설정되었습니다!");
-      }
-    });
+            <!-- Stop 버튼 -->
+            <button id="stopButton" aria-label="타이머 정지" class="w-[100px] h-[100px] absolute left-0 top-[65px] cursor-pointer hidden">
+                <div class="w-full h-full bg-[#f0f0f0] rounded-full shadow-[inset_0px_1px_10px_0px_rgba(0,0,0,0.25)]"></div>
+                <img src="/Timer/images/Stop.png" alt="스톱 아이콘" class="w-[33.33px] h-[33.33px] absolute left-[33px] top-[33px]" />
+            </button>
 
-    const changeStates = {
-      "타이머1": { timeLeft: 10, running: false },
-      "타이머2": { timeLeft: 20, running: false },
-      "타이머3": { timeLeft: 30, running: false }
-    };
+            <!-- 시간 표시 -->
+            <div class="timer-text absolute left-[217px] top-[89px] flex justify-center text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">
+                00:00
+            </div>
+        </section>
 
-    let currentChange = "타이머1";
-    let totalTime = 10;
-    let timeLeft = totalTime;
-    let timerInterval = null;
+        <div class="fixed bottom-4 right-4 text-black text-xl font-NanumMyeongjo whitespace-nowrap">
+            한일고등학교 학생자치정부 정보부
+        </div>
 
-    function updateProgress() {
-      const percent = (1 - timeLeft / totalTime) * 100;
-      fillCircle.style.background = `conic-gradient(#f0f0f0 ${percent}%, #CFDFFF ${percent}%)`;
-    }
+        <div data-layer="시간 설정" class="w-[540px] h-[574px] left-[360px] top-[279px] absolute overflow-hidden">
+            <div data-layer="Rectangle 1" class="Rectangle1 w-[540px] h-[574px] left-0 top-0 absolute bg-[#f0f0f0] rounded-[20px]"></div>
+            <div data-layer="Title" class="Title left-[50px] top-[50px] absolute inline-flex flex-col justify-start items-start gap-2">
+                <div data-layer="모의고사" class="justify-center text-black text-[34px] font-semibold font-['Inter'] leading-[37.40px]">시간 설정</div>
+                <div data-layer="Time Setting" class="TimeSetting justify-center text-[#444444] text-base font-normal font-['Inter'] leading-normal">Time Setting</div>
+            </div>
+            <div data-layer=":" class="left-[181px] top-[191px] absolute justify-center text-black text-[64px] font-normal font-['Inter'] leading-[96px]">:</div>
+            <div data-layer=":" class="left-[341px] top-[191px] absolute justify-center text-black text-[64px] font-normal font-['Inter'] leading-[96px]">:</div>
+            <div data-layer="hour" class="Hour left-[93px] top-[183px] absolute text-center justify-center text-[#444444] text-base font-normal font-['Inter'] leading-normal">hour</div>
+            <div data-layer="Rectangle 2" class="Rectangle2 w-[120px] h-20 left-[50px] top-[207px] absolute bg-[#d9d9d9] rounded-[20px] shadow-[inset_0px_2px_4px_0px_rgba(0,0,0,0.25)]"></div>
+            <div data-layer="00" class="left-[87px] top-[211px] absolute justify-center text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">00</div>
+            <div data-layer="min" class="Min left-[256px] top-[183px] absolute text-center justify-center text-[#444444] text-base font-normal font-['Inter'] leading-normal">min</div>
+            <div data-layer="Rectangle 3" class="Rectangle3 w-[120px] h-20 left-[210px] top-[207px] absolute bg-[#d9d9d9] rounded-[20px] shadow-[inset_0px_2px_4px_0px_rgba(0,0,0,0.25)]"></div>
+            <div data-layer="00" class="left-[247px] top-[211px] absolute justify-center text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">00</div>
+            <div data-layer="sec" class="Sec left-[417px] top-[183px] absolute text-center justify-center text-[#444444] text-base font-normal font-['Inter'] leading-normal">sec</div>
+            <div data-layer="Rectangle 4" class="Rectangle4 w-[120px] h-20 left-[370px] top-[207px] absolute bg-[#d9d9d9] rounded-[20px] shadow-[inset_0px_2px_4px_0px_rgba(0,0,0,0.25)]"></div>
+            <div data-layer="00" class="left-[407px] top-[211px] absolute justify-center text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">00</div>
+            <div data-layer="Rectangle 5" class="Rectangle5 w-[100px] h-10 left-[220px] top-[337px] absolute bg-[#cfdfff] rounded-[10px]"></div>
+            <div data-layer="확인" class="left-[255px] top-[345px] absolute text-center justify-center text-[#444444] text-base font-normal font-['Inter'] leading-normal">확인</div>
+        </div>
+    </main>
 
-    function updateDisplay() {
-      const t = Math.max(0, Math.floor(timeLeft));
-      const m = Math.floor(t / 60);
-      const s = t % 60;
-      timerDisplay.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-      updateProgress();
-    }
-
-    function stopTimer() {
-      clearInterval(timerInterval);
-      timerInterval = null;
-      changeStates[currentChange].running = false;
-      changeStates[currentChange].timeLeft = timeLeft;
-      stopButton.classList.add("hidden");
-      playButton.classList.remove("hidden");
-    }
-
-    function resetTimer() {
-      stopTimer();
-      timeLeft = totalTime;
-      updateDisplay();
-      changeStates[currentChange].timeLeft = timeLeft;
-    }
-
-    function startTimer() {
-      playButton.classList.add("hidden");
-      stopButton.classList.remove("hidden");
-      changeStates[currentChange].running = true;
-
-      const startTime = performance.now() - (totalTime - timeLeft) * 1000;
-      timerInterval = setInterval(() => {
-        const now = performance.now();
-        const elapsed = (now - startTime) / 1000;
-        timeLeft = totalTime - elapsed;
-
-        if (timeLeft <= 0) {
-          stopTimer();
-          timeLeft = 0;
-          updateDisplay();
-          if (alarmSound) alarmSound.play();
-          alert("⏰ 시간이 끝났습니다!");
-          alarmSound.pause();
-          alarmSound.currentTime = 0;
-          return;
+    <style>
+        /* 진행 채우기 원 배경 전환 효과 */
+        #fillCircle {
+            background: conic-gradient(#f0f0f0 0%, #CFDFFF 0%);
+            transition: background 1s linear;
         }
+    </style>
+
+    <script>
+        const timerDisplay = document.querySelector(".timer-text");
+        const playButton = document.getElementById("playButton");
+        const stopButton = document.getElementById("stopButton");
+        const resetButton = document.getElementById("resetButton");
+        const fillCircle = document.getElementById("fillCircle");
+        const alarmInput = document.getElementById("alarmFileInput");
+    
+        let alarmSound = null;
+        alarmInput.addEventListener("change", event => {
+            const file = event.target.files[0];
+            if (file) {
+                alarmSound = new Audio(URL.createObjectURL(file));
+                alarmSound.load();
+                alert("✅ 알람 소리 파일이 설정되었습니다!");
+            }
+        });
+    
+        const changeStates = {
+            "타이머1": { timeLeft: 10, running: false },
+            "타이머2": { timeLeft: 20, running: false },
+            "타이머3": { timeLeft: 30, running: false }
+        };
+    
+        let currentChange = "타이머1";
+        let totalTime = 10;
+        let timeLeft = totalTime;
+        let timerInterval = null;
+    
+        function updateProgress() {
+            const percent = (1 - timeLeft / totalTime) * 100;
+            fillCircle.style.background = conic-gradient(#f0f0f0 ${percent}%, #CFDFFF ${percent}%);
+        }
+    
+        function updateDisplay() {
+            const time = Math.max(0, Math.floor(timeLeft));
+            const minutes = Math.floor(time / 60);
+            const seconds = time % 60;
+
+            timerDisplay.textContent = ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')};
+            updateProgress();
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            changeStates[currentChange].running = false;
+            changeStates[currentChange].timeLeft = timeLeft;
+            stopButton.classList.add("hidden");
+            playButton.classList.remove("hidden");
+        }
+    
+        function resetTimer() {
+            stopTimer();
+            timeLeft = totalTime;
+            updateDisplay();
+            changeStates[currentChange].timeLeft = timeLeft;
+        }
+    
+        function startTimer(resume = false) {
+            playButton.classList.add("hidden");
+            stopButton.classList.remove("hidden");
+            changeStates[currentChange].running = true;
+    
+            const startTime = performance.now() - (totalTime - timeLeft) * 1000;
+            timerInterval = setInterval(() => {
+                const now = performance.now();
+                const elapsed = (now - startTime) / 1000;
+                timeLeft = totalTime - elapsed;
+    
+                if (timeLeft <= 0) {
+                    stopTimer();
+                    timeLeft = 0;
+                    updateDisplay();
+                    if (alarmSound) alarmSound.play();
+                    alert("⏰ 시간이 끝났습니다!");
+                    alarmSound.pause();
+                    alarmSound.currentTime = 0;
+                    return;
+                }
+    
+                updateDisplay();
+            }, 50);
+        }
+    
+        function switchChange(change) {
+            if (currentChange === change) return;
+    
+            if (timerInterval !== null) stopTimer();
+    
+            changeStates[currentChange].timeLeft = timeLeft;
+            changeStates[currentChange].running = (timerInterval !== null);
+    
+            currentChange = change;
+            totalTime = parseInt(document.querySelector([data-change="${change}"]).dataset.time);
+            timeLeft = changeStates[change].timeLeft;
+    
+            updateDisplay();
+    
+            if (changeStates[change].running) {
+                startTimer(true);
+            }
+        }
+    
+        playButton.addEventListener("click", () => startTimer());
+        stopButton.addEventListener("click", stopTimer);
+        resetButton.addEventListener("click", resetTimer);
+    
+        document.querySelectorAll(".change-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                document.querySelectorAll(".change-btn").forEach(otherBtn => {
+                    otherBtn.classList.remove("bg-white", "shadow", "rounded-lg");
+                    otherBtn.classList.add("bg-transparent");
+                });
+                btn.classList.add("bg-white", "shadow", "rounded-lg");
+                btn.classList.remove("bg-transparent");
+    
+                switchChange(btn.dataset.change);
+            });
+        });
+    
         updateDisplay();
-      }, 50);
-    }
-
-    function switchChange(change) {
-      if (currentChange === change) return;
-      if (timerInterval !== null) stopTimer();
-      changeStates[currentChange].timeLeft = timeLeft;
-      changeStates[currentChange].running = (timerInterval !== null);
-
-      currentChange = change;
-      totalTime = parseInt(document.querySelector(`[data-change="${change}"]`).dataset.time);
-      timeLeft = changeStates[change].timeLeft;
-      updateDisplay();
-
-      if (changeStates[change].running) startTimer();
-    }
-
-    playButton.addEventListener("click", startTimer);
-    stopButton.addEventListener("click", stopTimer);
-    resetButton.addEventListener("click", resetTimer);
-
-    document.querySelectorAll(".change-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        document.querySelectorAll(".change-btn").forEach(b => b.classList.remove("bg-white", "shadow", "rounded-lg"));
-        btn.classList.add("bg-white", "shadow", "rounded-lg");
-        switchChange(btn.dataset.change);
-      });
-    });
-
-    timerDisplay.addEventListener("click", () => {
-      overlay.classList.remove("hidden");
-      requestAnimationFrame(() => {
-        modalBox.classList.remove("translate-y-full");
-      });
-    });
-
-    confirmTime.addEventListener("click", () => {
-      const h = parseInt(inputHour.value) || 0;
-      const m = parseInt(inputMin.value) || 0;
-      const s = parseInt(inputSec.value) || 0;
-      const newTotal = h * 3600 + m * 60 + s;
-
-      if (newTotal > 0) {
-        totalTime = newTotal;
-        timeLeft = newTotal;
-        changeStates[currentChange].timeLeft = newTotal;
-        updateDisplay();
-      }
-
-      modalBox.classList.add("translate-y-full");
-      setTimeout(() => {
-        overlay.classList.add("hidden");
-      }, 300);
-    });
-
-    updateDisplay();
-  </script>
+    </script>
 </body>
 </html>
