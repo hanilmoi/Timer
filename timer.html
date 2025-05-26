@@ -86,7 +86,7 @@
     <section class="Clock w-[566px] h-[250px] relative overflow-hidden">
       <div class="w-[250px] h-[250px] absolute left-[158px] top-0">
         <div id="progressCircle" class="w-full h-full rounded-full relative">
-          <div id="fillCircle" class="absolute inset-0 rounded-full bg-[conic-gradient(#f0f0f0_0%,#00af84_0%)] transition-background duration-1000 ease-linear"></div>
+          <div id="fillCircle" class="absolute inset-0 rounded-full transition-background duration-1000 ease-linear"></div>
           <div class="absolute inset-[15.62px] rounded-full bg-white shadow-[inset_0_4px_10px_rgba(0,0,0,0.25)]"></div>
         </div>
       </div>
@@ -111,9 +111,9 @@
       </div>
     </section>
 
-    <!-- 투명 검정 배경 + 설정 모달 -->
-    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
-      <div class="bg-[#f0f0f0] rounded-[20px] w-[540px] h-[350px] relative">
+    <!-- 투명 배경 + 설정 모달 (슬라이드업) -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+      <div id="modalBox" class="bg-[#f0f0f0] rounded-[20px] w-[540px] h-[350px] absolute bottom-0 left-1/2 -translate-x-1/2 transform transition-transform duration-300 translate-y-full">
         <div class="p-8">
           <h2 class="text-[28px] font-semibold">시간 설정</h2>
           <div class="flex justify-center items-center gap-4 mt-6">
@@ -142,6 +142,7 @@
     const alarmInput = document.getElementById("alarmFileInput");
 
     const overlay = document.getElementById("overlay");
+    const modalBox = document.getElementById("modalBox");
     const inputHour = document.getElementById("inputHour");
     const inputMin = document.getElementById("inputMin");
     const inputSec = document.getElementById("inputSec");
@@ -250,6 +251,9 @@
 
     timerDisplay.addEventListener("click", () => {
       overlay.classList.remove("hidden");
+      requestAnimationFrame(() => {
+        modalBox.classList.remove("translate-y-full");
+      });
     });
 
     confirmTime.addEventListener("click", () => {
@@ -265,7 +269,10 @@
         updateDisplay();
       }
 
-      overlay.classList.add("hidden");
+      modalBox.classList.add("translate-y-full");
+      setTimeout(() => {
+        overlay.classList.add("hidden");
+      }, 300);
     });
 
     updateDisplay();
