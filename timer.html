@@ -171,7 +171,7 @@
             <!-- 시간 표시 -->
             <div class="timer-text absolute left-[217px] top-[89px] flex justify-center text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]"
                  style="z-index: 10; cursor: pointer;">
-                00:00
+                00:00:00
             </div>
         </section>
 
@@ -335,10 +335,15 @@
     
         function updateDisplay() {
             const time = Math.max(0, Math.floor(timeLeft));
-            const minutes = Math.floor(time / 60);
+            const hours = Math.floor(time / 3600);
+            const minutes = Math.floor((time % 3600) / 60);
             const seconds = time % 60;
-
-            timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        
+            timerDisplay.textContent = 
+                `${String(hours).padStart(2, '0')}:` +
+                `${String(minutes).padStart(2, '0')}:` +
+                `${String(seconds).padStart(2, '0')}`;
+        
             updateProgress();
         }
 
