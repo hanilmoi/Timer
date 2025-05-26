@@ -129,24 +129,45 @@
         </div>
 
         <div data-layer="시간 설정" class="w-[540px] h-[441px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden">
-            <div data-layer="Rectangle 1" class="Rectangle1 w-[540px] h-[574px] left-0 top-0 absolute bg-[#f0f0f0] rounded-[20px]"></div>
-            <div data-layer="Title" class="Title left-[50px] top-[50px] absolute inline-flex flex-col justify-start items-start gap-2">
-                <div data-layer="모의고사" class="justify-center text-black text-[34px] font-semibold font-['Inter'] leading-[37.40px]">시간 설정</div>
-                <div data-layer="Time Setting" class="TimeSetting justify-center text-[#444444] text-base font-normal font-['Inter'] leading-normal">Time Setting</div>
-            </div>
-            <div data-layer=":" class="left-[181px] top-[191px] absolute justify-center text-black text-[64px] font-normal font-['Inter'] leading-[96px]">:</div>
-            <div data-layer=":" class="left-[341px] top-[191px] absolute justify-center text-black text-[64px] font-normal font-['Inter'] leading-[96px]">:</div>
-            <div data-layer="hour" class="Hour left-[93px] top-[183px] absolute text-center justify-center text-[#444444] text-base font-normal font-['Inter'] leading-normal">hour</div>
-            <div data-layer="Rectangle 2" class="Rectangle2 w-[120px] h-20 left-[50px] top-[207px] absolute bg-[#d9d9d9] rounded-[20px] shadow-[inset_0px_2px_4px_0px_rgba(0,0,0,0.25)]"></div>
-            <div data-layer="00" class="left-[87px] top-[211px] absolute justify-center text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">00</div>
-            <div data-layer="min" class="Min left-[256px] top-[183px] absolute text-center justify-center text-[#444444] text-base font-normal font-['Inter'] leading-normal">min</div>
-            <div data-layer="Rectangle 3" class="Rectangle3 w-[120px] h-20 left-[210px] top-[207px] absolute bg-[#d9d9d9] rounded-[20px] shadow-[inset_0px_2px_4px_0px_rgba(0,0,0,0.25)]"></div>
-            <div data-layer="00" class="left-[247px] top-[211px] absolute justify-center text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">00</div>
-            <div data-layer="sec" class="Sec left-[417px] top-[183px] absolute text-center justify-center text-[#444444] text-base font-normal font-['Inter'] leading-normal">sec</div>
-            <div data-layer="Rectangle 4" class="Rectangle4 w-[120px] h-20 left-[370px] top-[207px] absolute bg-[#d9d9d9] rounded-[20px] shadow-[inset_0px_2px_4px_0px_rgba(0,0,0,0.25)]"></div>
-            <div data-layer="00" class="left-[407px] top-[211px] absolute justify-center text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">00</div>
-            <div data-layer="Rectangle 5" class="Rectangle5 w-[100px] h-10 left-[220px] top-[337px] absolute bg-[#cfdfff] rounded-[10px]"></div>
-            <div data-layer="확인" class="left-[255px] top-[345px] absolute text-center justify-center text-[#444444] text-base font-normal font-['Inter'] leading-normal">확인</div>
+          <!-- 배경 및 제목 -->
+          <div class="Rectangle1 w-[540px] h-[574px] left-0 top-0 absolute bg-[#f0f0f0] rounded-[20px]"></div>
+          <div class="Title left-[50px] top-[50px] absolute inline-flex flex-col justify-start items-start gap-2">
+            <div class="text-black text-[34px] font-semibold font-['Inter'] leading-[37.40px]">시간 설정</div>
+            <div class="text-[#444444] text-base font-normal font-['Inter'] leading-normal">Time Setting</div>
+          </div>
+        
+          <!-- 시(hour) 그룹 -->
+          <div data-group="hour" class="absolute left-[50px] top-[183px]">
+            <div class="text-center text-[#444444] text-base font-normal font-['Inter'] leading-normal">hour</div>
+            <div class="w-[120px] h-20 mt-1 bg-[#d9d9d9] rounded-[20px] shadow-[inset_0px_2px_4px_rgba(0,0,0,0.25)]"></div>
+            <div class="absolute top-[28px] left-[37px] text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">00</div>
+          </div>
+        
+          <!-- 첫 번째 콜론 -->
+          <div class="absolute left-[181px] top-[191px] text-black text-[64px] font-normal font-['Inter'] leading-[96px]">:</div>
+        
+          <!-- 분(min) 그룹 -->
+          <div data-group="minute" class="absolute left-[210px] top-[183px]">
+            <div class="text-center text-[#444444] text-base font-normal font-['Inter'] leading-normal">min</div>
+            <div class="w-[120px] h-20 mt-1 bg-[#d9d9d9] rounded-[20px] shadow-[inset_0px_2px_4px_rgba(0,0,0,0.25)]"></div>
+            <div class="absolute top-[28px] left-[37px] text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">00</div>
+          </div>
+        
+          <!-- 두 번째 콜론 -->
+          <div class="absolute left-[341px] top-[191px] text-black text-[64px] font-normal font-['Inter'] leading-[96px]">:</div>
+        
+          <!-- 초(sec) 그룹 -->
+          <div data-group="second" class="absolute left-[370px] top-[183px]">
+            <div class="text-center text-[#444444] text-base font-normal font-['Inter'] leading-normal">sec</div>
+            <div class="w-[120px] h-20 mt-1 bg-[#d9d9d9] rounded-[20px] shadow-[inset_0px_2px_4px_rgba(0,0,0,0.25)]"></div>
+            <div class="absolute top-[28px] left-[37px] text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">00</div>
+          </div>
+        
+          <!-- 확인 버튼 그룹 -->
+          <div data-group="confirm" class="absolute left-[220px] top-[337px]">
+            <div class="w-[100px] h-10 bg-[#cfdfff] rounded-[10px]"></div>
+            <div class="absolute top-[8px] left-[35px] text-center text-[#444444] text-base font-normal font-['Inter'] leading-normal">확인</div>
+          </div>
         </div>
     </main>
 
