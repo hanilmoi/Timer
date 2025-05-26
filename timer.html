@@ -40,27 +40,58 @@
             background: conic-gradient(#f0f0f0 0%, #CFDFFF 0%);
             transition: background 1s linear;
         }
-
+    
         .fade-slide-enter {
             transform: translateY(100%);
             opacity: 0;
         }
-
+    
         .fade-slide-enter-active {
             transform: translateY(0);
             opacity: 1;
             transition: transform 0.4s ease, opacity 0.4s ease;
         }
-
+    
         .fade-slide-leave {
             transform: translateY(0);
             opacity: 1;
         }
-
+    
         .fade-slide-leave-active {
             transform: translateY(100%);
             opacity: 0;
             transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+        
+        #overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background-color: rgba(0,0,0,0.5);
+            opacity: 0;
+            z-index: 40;
+            display: none;
+            transition: opacity 0.4s ease;
+        }
+    
+        #overlay.active {
+            display: block;
+            opacity: 1;
+        }
+    
+        #timeSettingLayer {
+            position: fixed;
+            bottom: 0; left: 0;
+            width: 100%;
+            height: 300px; /* 필요에 맞게 조절 */
+            background-color: white;
+            z-index: 50;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+    
+        #timeSettingLayer.active {
+            transform: translateY(0);
         }
     </style>
 </head>
@@ -204,14 +235,6 @@
             </div>
         </div>
     </main>
-
-    <style>
-        /* 진행 채우기 원 배경 전환 효과 */
-        #fillCircle {
-            background: conic-gradient(#f0f0f0 0%, #CFDFFF 0%);
-            transition: background 1s linear;
-        }
-    </style>
 
     <script>
         const timerDisplay = document.querySelector(".timer-text");
