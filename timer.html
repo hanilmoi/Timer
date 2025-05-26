@@ -160,8 +160,8 @@
         <!-- 검정 배경 오버레이 -->
         <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
 
-        <div id="timeSettingLayer" class="fixed w-[540px] h-[441px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-[20px] bg-[#f0f0f0] shadow-lg
-            transform translate-y-full opacity-0 transition-transform transition-opacity duration-400 z-50">
+        <div id="timeSettingLayer" class="fixed w-[540px] h-[441px] top-1/2 left-1/2 rounded-[20px] bg-[#f0f0f0] shadow-lg
+            transform -translate-x-1/2 -translate-y-1/2 translate-y-full opacity-0 transition-transform transition-opacity duration-400 z-50">
                 <!-- 배경 및 제목 -->
                 <div class="Rectangle1 w-[540px] h-[574px] left-0 top-0 absolute bg-[#f0f0f0] rounded-[20px]"></div>
                 <div class="Title left-[50px] top-[50px] absolute inline-flex flex-col justify-start items-start gap-2">
@@ -217,26 +217,25 @@
         const timeSettingLayer = document.getElementById("timeSettingLayer");
         const confirmBtn = timeSettingLayer.querySelector("[data-group='confirm']");
         
-        // 레이어 열기 함수
         function openTimeSetting() {
             overlay.classList.remove("hidden");
             setTimeout(() => {
                 overlay.style.opacity = "1";
-                timeSettingLayer.style.transform = "translateY(0)";
+                timeSettingLayer.classList.remove("translate-y-full");
+                timeSettingLayer.classList.add("translate-y-0");
                 timeSettingLayer.style.opacity = "1";
-            }, 10); // 약간 지연을 줘야 transition 효과 발생
+            }, 10);
         }
         
-        // 레이어 닫기 함수
         function closeTimeSetting() {
             overlay.style.opacity = "0";
-            timeSettingLayer.style.transform = "translateY(100%)";
+            timeSettingLayer.classList.remove("translate-y-0");
+            timeSettingLayer.classList.add("translate-y-full");
             timeSettingLayer.style.opacity = "0";
         
-            // transition 끝난 후 hidden 처리
             setTimeout(() => {
                 overlay.classList.add("hidden");
-            }, 400); // transition duration과 동일하게
+            }, 400);
         }
         
         // 시간 표시 클릭 시 레이어 열기
