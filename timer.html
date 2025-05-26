@@ -343,7 +343,14 @@
                 startTimer(true);
             }
         }
-    
+
+        console.log(timerText); // null 아니면 OK
+
+        timerText.addEventListener("click", () => {
+            console.log("타이머 클릭됨");
+            openTimeSetting();
+        });
+
         playButton.addEventListener("click", () => startTimer());
         stopButton.addEventListener("click", stopTimer);
         resetButton.addEventListener("click", resetTimer);
