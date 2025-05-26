@@ -243,6 +243,10 @@
         const secondBox = timeSettingLayer.querySelector("[data-group='second'] .text-5xl");
 
         function openTimeSetting() {
+            hourBox.textContent = "00";
+            minuteBox.textContent = "00";
+            secondBox.textContent = "00";
+            
             overlay.classList.remove("hidden");
             setTimeout(() => {
                 overlay.style.opacity = "1";
