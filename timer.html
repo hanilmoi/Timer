@@ -70,16 +70,14 @@
     <!-- 상단바 -->
     <header class="ml-[180px] w-[906px] h-[197px] p-8">
         <div class="flex justify-between items-center mb-8">
-            <div class="flex space-x-2 bg-graybg p-1 rounded-lg" id="subjectButtons">
-                <!-- 과목 버튼 : data-subject, data-time(초), data-color(진행바 색상) -->
-                <div class="subject-btn px-3 h-8 bg-white rounded-lg shadow flex items-center text-black text-base font-medium cursor-pointer"
-                     data-subject="국어" data-time="4800" data-color="#00AF84">국어</div>
-                <div class="subject-btn px-3 h-8 flex items-center text-black text-base font-medium cursor-pointer"
-                     data-subject="수학" data-time="6000" data-color="#E5007F">수학</div>
-                <div class="subject-btn px-3 h-8 flex items-center text-black text-base font-medium cursor-pointer"
-                     data-subject="영어" data-time="4200" data-color="#00A0E8">영어</div>
-                <div class="subject-btn px-3 h-8 flex items-center text-black text-base font-medium cursor-pointer"
-                     data-subject="탐구" data-time="1800" data-color="#004A95">탐구</div>
+            <div class="flex space-x-2 bg-graybg p-1 rounded-lg" id="changeButtons">
+                <!-- 변경 버튼 : data-change, data-time(초) -->
+                <div class="change-btn px-3 h-8 bg-white rounded-lg shadow flex items-center text-black text-base font-medium cursor-pointer"
+                     data-change="타이머1" data-time="0">타이머1</div>
+                <div class="change-btn px-3 h-8 flex items-center text-black text-base font-medium cursor-pointer"
+                     data-change="타이머2" data-time="0">타이머2</div>
+                <div class="change-btn px-3 h-8 flex items-center text-black text-base font-medium cursor-pointer"
+                     data-change="타이머3" data-time="0">타이머3</div>
             </div>
             <div class="h-10 px-4 bg-black text-white text-base font-medium rounded-lg flex items-center">for Hanil High</div>
         </div>
@@ -157,14 +155,14 @@
             }
         });
     
-        const subjectStates = {
+        const changeStates = {
             "국어": { timeLeft: 4800, running: false },
             "수학": { timeLeft: 6000, running: false },
             "영어": { timeLeft: 4200, running: false },
             "탐구": { timeLeft: 1800, running: false }
         };
     
-        let currentSubject = "국어";
+        let currentChange = "국어";
         let totalTime = 3;
         let timeLeft = totalTime;
         let timerInterval = null;
@@ -192,8 +190,8 @@
         function stopTimer() {
             clearInterval(timerInterval);
             timerInterval = null;
-            subjectStates[currentSubject].running = false;
-            subjectStates[currentSubject].timeLeft = timeLeft;
+            changeStates[currentChange].running = false;
+            changeStates[currentChange].timeLeft = timeLeft;
             stopButton.classList.add("hidden");
             playButton.classList.remove("hidden");
         }
@@ -202,13 +200,13 @@
             stopTimer();
             timeLeft = totalTime;
             updateDisplay();
-            subjectStates[currentSubject].timeLeft = timeLeft;
+            changeStates[currentChange].timeLeft = timeLeft;
         }
     
         function startTimer(resume = false) {
             playButton.classList.add("hidden");
             stopButton.classList.remove("hidden");
-            subjectStates[currentSubject].running = true;
+            changeStates[currentChange].running = true;
     
             const startTime = performance.now() - (totalTime - timeLeft) * 1000;
             timerInterval = setInterval(() => {
@@ -231,22 +229,22 @@
             }, 50);
         }
     
-        function switchSubject(subject) {
-            if (currentSubject === subject) return;
+        function switchChange(change) {
+            if (currentChange === change) return;
     
             if (timerInterval !== null) stopTimer();
     
-            subjectStates[currentSubject].timeLeft = timeLeft;
-            subjectStates[currentSubject].running = (timerInterval !== null);
+            changeStates[currentChange].timeLeft = timeLeft;
+            changeStates[currentChange].running = (timerInterval !== null);
     
-            currentSubject = subject;
-            totalTime = parseInt(document.querySelector(`[data-subject="${subject}"]`).dataset.time);
-            timeLeft = subjectStates[subject].timeLeft;
-            currentColor = document.querySelector(`[data-subject="${subject}"]`).dataset.color;
+            currentChange = change;
+            totalTime = parseInt(document.querySelector(`[data-change="${change}"]`).dataset.time);
+            timeLeft = changeStates[change].timeLeft;
+            currentColor = document.querySelector(`[data-change="${change}"]`).dataset.color;
     
             updateDisplay();
     
-            if (subjectStates[subject].running) {
+            if (changeStates[change].running) {
                 startTimer(true);
             }
         }
@@ -255,16 +253,16 @@
         stopButton.addEventListener("click", stopTimer);
         resetButton.addEventListener("click", resetTimer);
     
-        document.querySelectorAll(".subject-btn").forEach(btn => {
+        document.querySelectorAll(".change-btn").forEach(btn => {
             btn.addEventListener("click", () => {
-                document.querySelectorAll(".subject-btn").forEach(otherBtn => {
+                document.querySelectorAll(".change-btn").forEach(otherBtn => {
                     otherBtn.classList.remove("bg-white", "shadow", "rounded-lg");
                     otherBtn.classList.add("bg-transparent");
                 });
                 btn.classList.add("bg-white", "shadow", "rounded-lg");
                 btn.classList.remove("bg-transparent");
     
-                switchSubject(btn.dataset.subject);
+                switchChange(btn.dataset.change);
             });
         });
     
