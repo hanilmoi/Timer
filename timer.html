@@ -173,9 +173,8 @@
             한일고등학교 학생자치정부 정보부
         </div>
 
-        <div class="timer-text left-[196px] top-[95px] absolute text-center justify-center text-black text-[40px] font-normal font-['Anonymous_Pro'] leading-[60px]"
-             style="z-index: 10; cursor: pointer;">
-            00:00:00
+        <div class="timer-text absolute left-[217px] top-[89px] flex justify-center text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">
+            00:00
         </div>
 
         <!-- 검정 배경 오버레이 -->
@@ -406,13 +405,6 @@
                 startTimer(true);
             }
         }
-
-        console.log(timerText); // null 아니면 OK
-
-        timerText.addEventListener("click", () => {
-            console.log("타이머 클릭됨");
-            openTimeSetting();
-        });
 
         playButton.addEventListener("click", () => startTimer());
         stopButton.addEventListener("click", stopTimer);
