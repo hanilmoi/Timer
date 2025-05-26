@@ -234,9 +234,13 @@
         const fillCircle = document.getElementById("fillCircle");
         const alarmInput = document.getElementById("alarmFileInput");
         const timerText = document.querySelector(".timer-text");
+        
         const overlay = document.getElementById("overlay");
         const timeSettingLayer = document.getElementById("timeSettingLayer");
         const confirmBtn = timeSettingLayer.querySelector("[data-group='confirm']");
+        const hourBox = timeSettingLayer.querySelector("[data-group='hour'] .text-5xl");
+        const minuteBox = timeSettingLayer.querySelector("[data-group='minute'] .text-5xl");
+        const secondBox = timeSettingLayer.querySelector("[data-group='second'] .text-5xl");
 
         function openTimeSetting() {
             overlay.classList.remove("hidden");
@@ -258,10 +262,45 @@
         timerText.addEventListener("click", openTimeSetting);
         
         // 확인 버튼 클릭 시 레이어 닫기
-        confirmBtn.addEventListener("click", closeTimeSetting);
+        confirmBtn.addEventListener("click", () => {
+            closeTimeSetting();
+    
+            // 설정값 적용
+            const h = parseInt(hourBox.textContent) || 0;
+            const m = parseInt(minuteBox.textContent) || 0;
+            const s = parseInt(secondBox.textContent) || 0;
+            const total = h * 3600 + m * 60 + s;
+    
+            if (total > 0) {
+                totalTime = total;
+                timeLeft = total;
+                updateDisplay();
+                changeStates[currentChange].timeLeft = timeLeft;
+            }
+        });
 
         // 배경 오버레이 클릭 시 레이어 닫기
         overlay.addEventListener("click", closeTimeSetting);
+
+        // 숫자 클릭 시 값 입력
+        function setupEditableTimeBox(box, label) {
+            box.style.cursor = "pointer";
+            box.addEventListener("click", () => {
+                const input = prompt(`${label} 값을 입력하세요 (0~59):`, box.textContent);
+                if (input !== null) {
+                    const num = parseInt(input);
+                    if (!isNaN(num) && num >= 0 && num <= 59) {
+                        box.textContent = String(num).padStart(2, '0');
+                    } else {
+                        alert("❌ 0~59 사이의 숫자를 입력하세요.");
+                    }
+                }
+            });
+        }
+
+        setupEditableTimeBox(hourBox, "시");
+        setupEditableTimeBox(minuteBox, "분");
+        setupEditableTimeBox(secondBox, "초");
     
         let alarmSound = null;
         alarmInput.addEventListener("change", event => {
