@@ -334,7 +334,7 @@
             changeStates[currentChange].running = (timerInterval !== null);
     
             currentChange = change;
-            totalTime = parseInt(document.querySelector([data-change="${change}"]).dataset.time);
+            totalTime = parseInt(document.querySelector(`[data-change="${change}"]`).dataset.time);
             timeLeft = changeStates[change].timeLeft;
     
             updateDisplay();
