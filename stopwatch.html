@@ -1,1 +1,275 @@
 
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hanil Timer</title>
+    
+    <link rel="icon" href="/Timer/favicon.ico" type="image/x-icon" />
+    <link rel="manifest" href="/Timer/manifest.json" />
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Anonymous+Pro&family=Nanum+Myeongjo&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Custom Font & Color 설정 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        Inter: ['Inter', 'sans-serif'],
+                        Anonymous_Pro: ['"Anonymous Pro"', 'monospace'],
+                        NanumMyeongjo: ['"Nanum Myeongjo"', 'serif']
+                    },
+                    colors: {
+                        hanilgreen: "#00AF84",
+                        graylight: "#F0F0F0",
+                        graymid: "#DFDFDF",
+                        graybg: "#F7F7F7",
+                        darkgray: "#444444"
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-white font-Inter">
+
+    <!-- 사이드바 -->
+    <aside class="fixed left-0 top-0 w-[180px] h-screen bg-white border-r border-graymid p-6 flex flex-col justify-between">
+        <div>
+            <h1 class="text-black text-xl font-semibold mb-10 leading-[30px]">HANIL TIMER</h1>
+            <nav class="space-y-2">
+                <div class="px-2 h-10 flex items-center gap-4">
+                    <span class="text-black text-base font-semibold">Features</span>
+                </div>
+                <a href="index.html" class="block px-2 h-10 flex items-center gap-4 hover:bg-graybg rounded-lg">
+                    <img src="/Timer/images/PracticeExamTimer.png" alt="모의고사 아이콘" class="w-[25px] h-[25px]" />
+                    <span class="text-black text-base font-medium">모의고사</span>
+                </a>
+                <div class="px-2 h-10 flex items-center gap-4 bg-graybg rounded-lg">
+                    <img src="/Timer/images/Stopwatch.png" alt="스톱워치 아이콘" class="w-[25px] h-[25px]" />
+                    <span class="text-black text-base font-medium">스톱워치</span>
+                </div>
+                <a href="timer.html" class="block px-2 h-10 flex items-center gap-4 hover:bg-graybg rounded-lg">
+                    <img src="/Timer/images/Timer.png" alt="타이머 아이콘" class="w-[25px] h-[26px]" />
+                    <span class="text-black text-base font-medium">타이머</span>
+                </a>
+            </nav>
+        </div>
+        <div class="mt-4">
+            <label for="alarmFileInput" class="text-black text-sm font-medium block mb-1">🔔 알람 소리 선택</label>
+            <input type="file" id="alarmFileInput" accept="audio/*" class="text-sm w-full" />
+        </div>
+    </aside>
+    
+    <!-- 상단바 -->
+    <header class="ml-[180px] w-[906px] h-[197px] p-8">
+        <div class="flex justify-between items-center mb-8">
+            <div class="flex space-x-2 bg-graybg p-1 rounded-lg" id="subjectButtons">
+                <!-- 과목 버튼 : data-subject, data-time(초), data-color(진행바 색상) -->
+                <div class="subject-btn px-3 h-8 bg-white rounded-lg shadow flex items-center text-black text-base font-medium cursor-pointer"
+                     data-subject="국어" data-time="4800" data-color="#00AF84">국어</div>
+                <div class="subject-btn px-3 h-8 flex items-center text-black text-base font-medium cursor-pointer"
+                     data-subject="수학" data-time="6000" data-color="#E5007F">수학</div>
+                <div class="subject-btn px-3 h-8 flex items-center text-black text-base font-medium cursor-pointer"
+                     data-subject="영어" data-time="4200" data-color="#00A0E8">영어</div>
+                <div class="subject-btn px-3 h-8 flex items-center text-black text-base font-medium cursor-pointer"
+                     data-subject="탐구" data-time="1800" data-color="#004A95">탐구</div>
+            </div>
+            <div class="h-10 px-4 bg-black text-white text-base font-medium rounded-lg flex items-center">for Hanil High</div>
+        </div>
+        <div>
+            <h2 class="text-black text-[34px] font-semibold leading-[37.40px]">모의고사</h2>
+            <p class="text-darkgray text-base font-normal">Practice Exam Timer</p>
+        </div>
+    </header>
+
+    <!-- 메인 타이머 영역 -->
+    <main class="ml-[174px] w-[906px] flex justify-center items-center h-[400px] relative">
+        <section data-layer="Clock" class="Clock w-[566px] h-[250px] relative overflow-hidden">
+            <div data-layer="과목별 타이머" class="w-[250px] h-[250px] absolute left-[158px] top-0">
+                <!-- 프로그레스 배경 -->
+                <div id="progressCircle" class="w-full h-full rounded-full relative">
+                    <!-- 진행 채우기 원 -->
+                    <div id="fillCircle" class="absolute inset-0 rounded-full bg-[conic-gradient(#f0f0f0_0%,#00af84_0%)] transition-background duration-1000 ease-linear"></div>
+                    <!-- 중앙 흰색 원 (입체감 효과) -->
+                    <div class="absolute inset-[15.62px] rounded-full bg-white shadow-[inset_0px_4px_10px_0px_rgba(0,0,0,0.25)]"></div>
+                </div>
+            </div>
+
+            <!-- Reset 버튼 -->
+            <button id="resetButton" aria-label="타이머 초기화" class="w-[100px] h-[100px] absolute left-[466px] top-[65px] cursor-pointer">
+                <div class="w-full h-full bg-[#f0f0f0] rounded-full shadow-[inset_0px_1px_10px_0px_rgba(0,0,0,0.25)]"></div>
+                <img src="/Timer/images/Reset.png" alt="리셋 아이콘" class="w-[41.67px] h-[41.67px] absolute left-[29px] top-[29px]" />
+            </button>
+
+            <!-- Play 버튼 -->
+            <button id="playButton" aria-label="타이머 시작" class="w-[100px] h-[100px] absolute left-0 top-[65px] cursor-pointer">
+                <div class="w-full h-full bg-[#f0f0f0] rounded-full shadow-[inset_0px_1px_10px_0px_rgba(0,0,0,0.25)]"></div>
+                <img src="/Timer/images/Play.png" alt="플레이 아이콘" class="w-[41.67px] h-[41.67px] absolute left-[33px] top-[29px]" />
+            </button>
+
+            <!-- Stop 버튼 -->
+            <button id="stopButton" aria-label="타이머 정지" class="w-[100px] h-[100px] absolute left-0 top-[65px] cursor-pointer hidden">
+                <div class="w-full h-full bg-[#f0f0f0] rounded-full shadow-[inset_0px_1px_10px_0px_rgba(0,0,0,0.25)]"></div>
+                <img src="/Timer/images/Stop.png" alt="스톱 아이콘" class="w-[33.33px] h-[33.33px] absolute left-[33px] top-[33px]" />
+            </button>
+
+            <!-- 시간 표시 -->
+            <div class="timer-text absolute left-[217px] top-[89px] flex justify-center text-black text-5xl font-normal font-['Anonymous_Pro'] leading-[72px]">
+                00:00
+            </div>
+        </section>
+
+        <div class="fixed bottom-4 right-4 text-black text-xl font-NanumMyeongjo whitespace-nowrap">
+            한일고등학교 학생자치정부 정보부
+        </div>
+    </main>
+
+    <style>
+        /* 진행 채우기 원 배경 전환 효과 */
+        #fillCircle {
+            background: conic-gradient(#f0f0f0 0%, #00af84 0%);
+            transition: background 1s linear;
+        }
+    </style>
+
+    <script>
+        const timerDisplay = document.querySelector(".timer-text");
+        const playButton = document.getElementById("playButton");
+        const stopButton = document.getElementById("stopButton");
+        const resetButton = document.getElementById("resetButton");
+        const fillCircle = document.getElementById("fillCircle");
+        const alarmInput = document.getElementById("alarmFileInput");
+    
+        let alarmSound = null;
+        alarmInput.addEventListener("change", event => {
+            const file = event.target.files[0];
+            if (file) {
+                alarmSound = new Audio(URL.createObjectURL(file));
+                alarmSound.load();
+                alert("✅ 알람 소리 파일이 설정되었습니다!");
+            }
+        });
+    
+        const subjectStates = {
+            "국어": { timeLeft: 4800, running: false },
+            "수학": { timeLeft: 6000, running: false },
+            "영어": { timeLeft: 4200, running: false },
+            "탐구": { timeLeft: 1800, running: false }
+        };
+    
+        let currentSubject = "국어";
+        let totalTime = 4800;
+        let timeLeft = totalTime;
+        let timerInterval = null;
+        let currentColor = "#00AF84";
+    
+        function updateProgress() {
+            const percent = (1 - timeLeft / totalTime) * 100;
+            fillCircle.style.background = `conic-gradient(#f0f0f0 ${percent}%, ${currentColor} ${percent}%)`;
+        }
+    
+        function updateDisplay() {
+            const time = Math.max(0, Math.floor(timeLeft));
+            const minutes = Math.floor(time / 60);
+            const seconds = time % 60;
+        
+            if (totalTime === 6000) { // 100분 예외 처리
+                timerDisplay.textContent = `${minutes}:${seconds}`;
+            } else {
+                timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            }
+        
+            updateProgress();
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            subjectStates[currentSubject].running = false;
+            subjectStates[currentSubject].timeLeft = timeLeft;
+            stopButton.classList.add("hidden");
+            playButton.classList.remove("hidden");
+        }
+    
+        function resetTimer() {
+            stopTimer();
+            timeLeft = totalTime;
+            updateDisplay();
+            subjectStates[currentSubject].timeLeft = timeLeft;
+        }
+    
+        function startTimer(resume = false) {
+            playButton.classList.add("hidden");
+            stopButton.classList.remove("hidden");
+            subjectStates[currentSubject].running = true;
+    
+            const startTime = performance.now() - (totalTime - timeLeft) * 1000;
+            timerInterval = setInterval(() => {
+                const now = performance.now();
+                const elapsed = (now - startTime) / 1000;
+                timeLeft = totalTime - elapsed;
+    
+                if (timeLeft <= 0) {
+                    stopTimer();
+                    timeLeft = 0;
+                    updateDisplay();
+                    if (alarmSound) alarmSound.play();
+                    alert("⏰ 시간이 끝났습니다!");
+                    alarmSound.pause();
+                    alarmSound.currentTime = 0;
+                    return;
+                }
+    
+                updateDisplay();
+            }, 50);
+        }
+    
+        function switchSubject(subject) {
+            if (currentSubject === subject) return;
+    
+            if (timerInterval !== null) stopTimer();
+    
+            subjectStates[currentSubject].timeLeft = timeLeft;
+            subjectStates[currentSubject].running = (timerInterval !== null);
+    
+            currentSubject = subject;
+            totalTime = parseInt(document.querySelector(`[data-subject="${subject}"]`).dataset.time);
+            timeLeft = subjectStates[subject].timeLeft;
+            currentColor = document.querySelector(`[data-subject="${subject}"]`).dataset.color;
+    
+            updateDisplay();
+    
+            if (subjectStates[subject].running) {
+                startTimer(true);
+            }
+        }
+    
+        playButton.addEventListener("click", () => startTimer());
+        stopButton.addEventListener("click", stopTimer);
+        resetButton.addEventListener("click", resetTimer);
+    
+        document.querySelectorAll(".subject-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                document.querySelectorAll(".subject-btn").forEach(otherBtn => {
+                    otherBtn.classList.remove("bg-white", "shadow", "rounded-lg");
+                    otherBtn.classList.add("bg-transparent");
+                });
+                btn.classList.add("bg-white", "shadow", "rounded-lg");
+                btn.classList.remove("bg-transparent");
+    
+                switchSubject(btn.dataset.subject);
+            });
+        });
+    
+        updateDisplay();
+    </script>
+</body>
+</html>
