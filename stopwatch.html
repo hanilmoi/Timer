@@ -122,15 +122,24 @@
         const stopButton = document.getElementById("stopButton");
         const resetButton = document.getElementById("resetButton");
     
-        function formatTime(timeInSeconds) {
+        function formatTime(timeInSeconds, mode = "hms") {
+            const totalMilliseconds = timeInSeconds * 1000;
             const hours = Math.floor(timeInSeconds / 3600);
             const minutes = Math.floor((timeInSeconds % 3600) / 60);
             const seconds = Math.floor(timeInSeconds % 60);
-            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            const milliseconds = Math.floor(totalMilliseconds % 1000 / 10); // 두 자리만
+    
+            if (mode === "hms") {
+                return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            } else {
+                const min = Math.floor(timeInSeconds / 60);
+                const sec = Math.floor(timeInSeconds % 60);
+                return `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}:${String(milliseconds).padStart(2, '0')}`;
+            }
         }
     
         function updateDisplay() {
-            timerDisplay.textContent = formatTime(stopwatchTime);
+            timerDisplay.textContent = formatTime(stopwatchTime, currentMode);
         }
     
         function startStopwatch() {
@@ -164,6 +173,33 @@
         stopButton.addEventListener("click", stopStopwatch);
         resetButton.addEventListener("click", resetStopwatch);
     
+        // --- Mode 버튼 기능 추가 ---
+        const modeButtons = document.querySelectorAll(".mode-btn");
+        let currentMode = "hms";
+    
+        modeButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                // 스타일 초기화
+                modeButtons.forEach(btn => btn.classList.remove("bg-white", "shadow"));
+                button.classList.add("bg-white", "shadow");
+    
+                currentMode = button.getAttribute("data-mode");
+    
+                if (currentMode === "hms") {
+                    document.querySelector('[data-layer="hour"]').textContent = "hour";
+                    document.querySelector('[data-layer="min"]').textContent = "min";
+                    document.querySelector('[data-layer="sec"]').textContent = "sec";
+                } else if (currentMode === "msms") {
+                    document.querySelector('[data-layer="hour"]').textContent = "min";
+                    document.querySelector('[data-layer="min"]').textContent = "sec";
+                    document.querySelector('[data-layer="sec"]').textContent = "msec";
+                }
+    
+                updateDisplay(); // 모드 변경 시 표시도 즉시 갱신
+            });
+        });
+    
+        // 초기 표시
         updateDisplay();
     </script>
 </body>
