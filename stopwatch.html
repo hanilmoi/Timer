@@ -65,13 +65,17 @@
     <!-- 상단바 -->
     <header class="ml-[180px] w-[906px] h-[197px] p-8">
         <div class="flex justify-between items-center mb-8">
+            
+            <!-- 모드 버튼 영역 -->
             <div class="flex space-x-2 bg-graybg p-1 rounded-lg" id="modeButtons">
-                <!-- 모드 버튼 -->
+                <!-- hour. min. sec 모드 (기본 선택됨) -->
                 <div class="mode-btn px-3 h-8 bg-white rounded-lg shadow flex items-center text-black text-base font-medium cursor-pointer"
                      data-mode="hms">hour. min. sec</div>
+                <!-- min. sec. msec 모드 -->
                 <div class="mode-btn px-3 h-8 flex items-center text-black text-base font-medium cursor-pointer"
                      data-mode="msms">min. sec. msec</div>
             </div>
+            
             <div class="h-10 px-4 bg-black text-white text-base font-medium rounded-lg flex items-center">for Hanil High</div>
         </div>
         <div>
@@ -102,9 +106,11 @@
             <img src="/Timer/images/Stop.png" alt="스톱 아이콘" class="w-[33.33px] h-[33.33px] absolute left-[33px] top-[33px]" />
         </button>
         
+        <!-- 시/분/초 라벨 (Main 타이머 영역 안) -->
         <div data-layer="hour" class="Hour left-[212px] top-0 absolute text-center justify-center text-[#444444] text-base font-normal font-['Inter'] leading-normal">hour</div>
         <div data-layer="min" class="Min left-[373px] top-0 absolute text-center justify-center text-[#444444] text-base font-normal font-['Inter'] leading-normal">min</div>
         <div data-layer="sec" class="Sec left-[528px] top-0 absolute text-center justify-center text-[#444444] text-base font-normal font-['Inter'] leading-normal">sec</div>
+
         <div data-layer="한일고등학교 학생자치정부 정보부" class="left-[533px] top-[386px] absolute justify-center text-black text-xl font-normal font-['NanumMyeongjo'] leading-[30px]">한일고등학교 학생자치정부 정보부</div>
     </div>
 
