@@ -109,114 +109,54 @@
     </div>
 
     <script>
-        const modeStates = {
-            "국어": { timeLeft: 4800, running: false },
-            "수학": { timeLeft: 6000, running: false },
-        };
+        let stopwatchTime = 0; // 경과 시간 (초 단위)
+        let stopwatchInterval = null;
+        const timerDisplay = document.querySelector('[data-layer="00:80:00"]');
+        const playButton = document.getElementById("playButton");
+        const stopButton = document.getElementById("stopButton");
+        const resetButton = document.getElementById("resetButton");
     
-        let currentmode = "국어";
-        let totalTime = 4800;
-        let timeLeft = totalTime;
-        let timerInterval = null;
-        let currentColor = "#00AF84";
-    
-        function updateProgress() {
-            const percent = (1 - timeLeft / totalTime) * 100;
-            fillCircle.style.background = `conic-gradient(#f0f0f0 ${percent}%, ${currentColor} ${percent}%)`;
+        function formatTime(timeInSeconds) {
+            const hours = Math.floor(timeInSeconds / 3600);
+            const minutes = Math.floor((timeInSeconds % 3600) / 60);
+            const seconds = Math.floor(timeInSeconds % 60);
+            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
         }
     
         function updateDisplay() {
-            const time = Math.max(0, Math.floor(timeLeft));
-            const minutes = Math.floor(time / 60);
-            const seconds = time % 60;
-        
-            if (totalTime === 6000) { // 100분 예외 처리
-                timerDisplay.textContent = `${minutes}:${seconds}`;
-            } else {
-                timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-            }
-        
-            updateProgress();
-        }
-
-        function stopTimer() {
-            clearInterval(timerInterval);
-            timerInterval = null;
-            modeStates[currentmode].running = false;
-            modeStates[currentmode].timeLeft = timeLeft;
-            stopButton.classList.add("hidden");
-            playButton.classList.remove("hidden");
+            timerDisplay.textContent = formatTime(stopwatchTime);
         }
     
-        function resetTimer() {
-            stopTimer();
-            timeLeft = totalTime;
-            updateDisplay();
-            modeStates[currentmode].timeLeft = timeLeft;
-        }
+        function startStopwatch() {
+            if (stopwatchInterval) return;
+            const startTime = performance.now() - stopwatchTime * 1000;
     
-        function startTimer(resume = false) {
-            playButton.classList.add("hidden");
-            stopButton.classList.remove("hidden");
-            modeStates[currentmode].running = true;
-    
-            const startTime = performance.now() - (totalTime - timeLeft) * 1000;
-            timerInterval = setInterval(() => {
+            stopwatchInterval = setInterval(() => {
                 const now = performance.now();
-                const elapsed = (now - startTime) / 1000;
-                timeLeft = totalTime - elapsed;
-    
-                if (timeLeft <= 0) {
-                    stopTimer();
-                    timeLeft = 0;
-                    updateDisplay();
-                    if (alarmSound) alarmSound.play();
-                    alert("⏰ 시간이 끝났습니다!");
-                    alarmSound.pause();
-                    alarmSound.currentTime = 0;
-                    return;
-                }
-    
+                stopwatchTime = (now - startTime) / 1000;
                 updateDisplay();
             }, 50);
+    
+            playButton.classList.add("hidden");
+            stopButton.classList.remove("hidden");
         }
     
-        function switchmode(mode) {
-            if (currentmode === mode) return;
+        function stopStopwatch() {
+            clearInterval(stopwatchInterval);
+            stopwatchInterval = null;
+            playButton.classList.remove("hidden");
+            stopButton.classList.add("hidden");
+        }
     
-            if (timerInterval !== null) stopTimer();
-    
-            modeStates[currentmode].timeLeft = timeLeft;
-            modeStates[currentmode].running = (timerInterval !== null);
-    
-            currentmode = mode;
-            totalTime = parseInt(document.querySelector(`[data-mode="${mode}"]`).dataset.time);
-            timeLeft = modeStates[mode].timeLeft;
-            currentColor = document.querySelector(`[data-mode="${mode}"]`).dataset.color;
-    
+        function resetStopwatch() {
+            stopStopwatch();
+            stopwatchTime = 0;
             updateDisplay();
-    
-            if (modeStates[mode].running) {
-                startTimer(true);
-            }
         }
     
-        playButton.addEventListener("click", () => startTimer());
-        stopButton.addEventListener("click", stopTimer);
-        resetButton.addEventListener("click", resetTimer);
-    
-        document.querySelectorAll(".mode-btn").forEach(btn => {
-            btn.addEventListener("click", () => {
-                document.querySelectorAll(".mode-btn").forEach(otherBtn => {
-                    otherBtn.classList.remove("bg-white", "shadow", "rounded-lg");
-                    otherBtn.classList.add("bg-transparent");
-                });
-                btn.classList.add("bg-white", "shadow", "rounded-lg");
-                btn.classList.remove("bg-transparent");
-    
-                switchmode(btn.dataset.mode);
-            });
-        });
+        playButton.addEventListener("click", startStopwatch);
+        stopButton.addEventListener("click", stopStopwatch);
+        resetButton.addEventListener("click", resetStopwatch);
     
         updateDisplay();
     </script>
